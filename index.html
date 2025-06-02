@@ -496,4 +496,345 @@
         </p>
 
         <div class="space-y-4 mb-6">
-            <a href="https://whatsapp.com/channel
+            <a href="https://whatsapp.com/channel/0029VacommHBfxo8V9QWSx2O" target="_blank" id="whatsappTask" class="task-button whatsapp">
+                Ikuti Saluran WhatsApp
+            </a>
+
+            <a href="https://www.youtube.com/@Hanzerotes" target="_blank" id="youtubeTask" class="task-button youtube">
+                Subscribe Saluran YouTube
+            </a>
+        </div>
+
+        <div class="progress-bar-container">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <p id="progressText" class="progress-text">0% Selesai</p>
+
+        <button id="openLinkButton" class="main-action-button" disabled>
+            Selesaikan tugas untuk membuka tautan
+        </button>
+
+        <div class="donate-section">
+            <h2 class="donate-title">Dukung Saya: Donate Robux!</h2>
+            <div class="donate-buttons-grid">
+                <a href="https://www.roblox.com/game-pass/952116430/Donate-5-Robux" target="_blank" class="donate-button">
+                    5 Robux
+                </a>
+                <a href="https://www.roblox.com/game-pass/890197076/Donate-10-Robux" target="_blank" class="donate-button">
+                    10 Robux
+                </a>
+                <a href="https://www.roblox.com/game-pass/890190002/Donate-50-Robux" target="_blank" class="donate-button">
+                    50 Robux
+                </a>
+                <a href="https://www.roblox.com/game-pass/928308990/Donate-100-Robux" target="_blank" class="donate-button">
+                    100 Robux
+                </a>
+            </div>
+        </div>
+        <div class="contact-section">
+            <h2 class="contact-title">Hubungi Saya</h2>
+            <form action="https://formspree.io/f/movwqdao" method="POST" class="contact-form">
+                <label for="name">Nama Kamu:</label>
+                <input type="text" id="name" name="name" required placeholder="Masukkan nama kamu">
+
+                <label for="email">Email Kamu:</label>
+                <input type="email" id="email" name="_replyto" required placeholder="Masukkan email kamu">
+
+                <label for="message">Pesan Kamu:</label>
+                <textarea id="message" name="message" rows="5" required placeholder="Tulis pesan kamu di sini..."></textarea>
+
+                <button type="submit">Kirim Pesan</button>
+            </form>
+        </div>
+        <p class="footer-text">
+            Dibuat dengan Suka Suka 😋<br>Terima kasih <span style="font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Segoe UI Symbol';">G</span>🐱
+        </p>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Function to get URL parameter and decode Base64
+        function getUrlParameterAndBase64Decode(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            if (results === null) {
+                return '';
+            } else {
+                try {
+                    // Decode the Base64 string
+                    return decodeURIComponent(atob(results[1].replace(/\+/g, ' ')));
+                } catch (e) {
+                    console.error("Error decoding URL parameter:", e);
+                    return ''; // Return empty string on error
+                }
+            }
+        };
+
+        // Function to get URL parameter (plain text)
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            if (results === null) {
+                return '';
+            } else {
+                // Return decoded URI component (standard URL decoding)
+                return decodeURIComponent(results[1].replace(/\+/g, ' '));
+            }
+        };
+
+        // Define your target link here
+        // It will try to get the 'target' parameter from the URL and decode it (Base64).
+        // If not found or decoding fails, it defaults to 'https://roihanmuslimin.github.io/TaskLinkUnlocker123/'.
+        const TARGET_LINK = getUrlParameterAndBase64Decode('target') || "https://roihanmuslimin.github.io/TaskLinkUnlocker123/"; // Default link jika tidak ada parameter target
+
+        // NEW: Get dynamic display text for the main button from 'disphanzer' parameter (plain text)
+        const DISPLAY_TEXT = getUrlParameter('disphanzer') || 'script'; // Default to 'script' if no 'disphanzer' param
+
+        // Get elements
+        const htmlElement = document.documentElement;
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const whatsappTask = document.getElementById('whatsappTask');
+        const youtubeTask = document.getElementById('youtubeTask');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const openLinkButton = document.getElementById('openLinkButton');
+
+        // Task completion status (ALWAYS reset on page load)
+        let isWhatsappCompleted = false;
+        let isYoutubeCompleted = false;
+
+        // --- Dark Mode Logic ---
+        const themeKey = 'theme';
+        const lightTheme = 'light';
+        const darkTheme = 'dark';
+
+        // Function to set the theme
+        function setTheme(theme) {
+            htmlElement.className = theme; // Set class on html element
+            localStorage.setItem(themeKey, theme); // Save preference
+            // Update icon based on theme
+            if (theme === darkTheme) {
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            } else {
+                darkModeToggle.querySelector('i').classList.remove('fa-sun');
+                darkModeToggle.querySelector('i').classList.add('fa-moon');
+            }
+        }
+
+        // Check for saved theme preference or system preference on load
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem(themeKey);
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                // If no saved theme, check system preference
+                setTheme(darkTheme);
+            } else {
+                setTheme(lightTheme); // Default to light if no preference
+            }
+        }
+
+        // Toggle theme on button click
+        darkModeToggle.addEventListener('click', () => {
+            if (htmlElement.classList.contains(lightTheme)) {
+                setTheme(darkTheme);
+            } else {
+                setTheme(lightTheme);
+            }
+        });
+        // --- End Dark Mode Logic ---
+
+
+        // Function to update UI based on task status
+        function updateUI() {
+            let completedTasks = 0;
+
+            if (isWhatsappCompleted) {
+                whatsappTask.classList.add('completed');
+                whatsappTask.removeAttribute('href'); // Remove link to prevent re-clicking
+                whatsappTask.style.cursor = 'default';
+                completedTasks++;
+            } else {
+                whatsappTask.classList.remove('completed');
+                // Restore link if not completed, using the new link
+                whatsappTask.setAttribute('href', "https://whatsapp.com/channel/0029VacommHBfxo8V9QWSx2O");
+                whatsappTask.style.cursor = 'pointer';
+            }
+
+            if (isYoutubeCompleted) {
+                youtubeTask.classList.add('completed');
+                youtubeTask.removeAttribute('href'); // Remove link
+                youtubeTask.style.cursor = 'default';
+                completedTasks++;
+            } else {
+                youtubeTask.classList.remove('completed');
+                // Restore link if not completed, using the new link
+                youtubeTask.setAttribute('href', "https://www.youtube.com/@Hanzerotes");
+                youtubeTask.style.cursor = 'pointer';
+            }
+
+            // Update progress bar
+            const progressPercentage = (completedTasks / 2) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${progressPercentage}% Selesai`;
+
+            // Enable/Disable main button
+            if (completedTasks === 2) {
+                openLinkButton.disabled = false;
+                openLinkButton.textContent = `Buka ${DISPLAY_TEXT} Sekarang!`; // Use dynamic text
+            } else {
+                openLinkButton.disabled = true;
+                openLinkButton.textContent = `Selesaikan tugas untuk membuka ${DISPLAY_TEXT}`; // Use dynamic text
+            }
+        }
+
+        // Event Listeners for tasks
+        whatsappTask.addEventListener('click', (event) => {
+            if (isWhatsappCompleted) {
+                event.preventDefault();
+            } else {
+                setTimeout(() => {
+                    isWhatsappCompleted = true;
+                    updateUI();
+                }, 3100); // Jeda 3.1 detik
+            }
+        });
+
+        youtubeTask.addEventListener('click', (event) => {
+            if (isYoutubeCompleted) {
+                event.preventDefault();
+            } else {
+                setTimeout(() => {
+                    isYoutubeCompleted = true;
+                    updateUI();
+                }, 3100); // Jeda 3.1 detik
+            }
+        });
+
+        openLinkButton.addEventListener('click', () => {
+            if (!openLinkButton.disabled) {
+                window.open(TARGET_LINK, '_blank');
+            }
+        });
+
+        // --- Particles.js Initialization ---
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#FFFFFF"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.8,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 5,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#FFFFFF",
+                    "opacity": 0.7,
+                    "width": 2
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+        // --- End Particles.js Initialization ---
+
+
+        // Initial UI update and theme initialization on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeTheme(); // Initialize theme first
+            updateUI(); // Then update UI
+        });
+    </script>
+</body>
+</html>
+
