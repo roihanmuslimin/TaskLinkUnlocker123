@@ -1,16 +1,32 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
+<html lang="id" class="light"> <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selesaikan Tugas untuk Membuka Tautan</title>
+    <title>Selesaikan Tugas untuk Membuka Tautan | Akses Eksklusif & Donasi</title>
+    <meta name="description" content="Selesaikan tugas sederhana untuk membuka tautan eksklusif dan dukung saya dengan donasi Robux. Akses konten premium dengan mudah.">
+    <meta name="keywords" content="tugas, tautan, buka link, robux, donasi, gamepass, whatsapp, youtube, akses eksklusif, github pages">
+    <meta name="author" content="G">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://roihanmuslimin.github.io/TaskLinkUnlocker123/"> <meta property="og:title" content="Selesaikan Tugas untuk Membuka Tautan!">
+    <meta property="og:description" content="Akses konten eksklusif dengan menyelesaikan tugas sederhana dan dukung saya dengan donasi Robux.">
+    <meta property="og:image" content="https://placehold.co/1200x630/e0ffe0/36454F?text=Selesaikan+Tugas+Buka+Tautan"> <script async src="https://www.googletagmanager.com/gtag/js?id=G-S57XREST5X"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-S57XREST5X'); // ID Pengukuran GA4 kamu
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Custom styles for refined UI */
         body {
             font-family: 'Inter', sans-serif;
-            /* Soft, calming mint green gradient background */
+            /* Light theme background */
             background: linear-gradient(135deg, #f0fff4 0%, #e0ffe0 100%);
             display: flex;
             justify-content: center;
@@ -19,7 +35,14 @@
             margin: 0;
             padding: 1.5rem; /* Consistent padding */
             box-sizing: border-box;
+            transition: background-color 0.5s ease; /* Smooth transition for theme change */
         }
+
+        /* Dark mode body background */
+        html.dark body {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%); /* Darker, deep blue-gray gradient */
+        }
+
         .card-container {
             /* Very light, warm cream/off-white background */
             background-color: #fdfcf5;
@@ -31,8 +54,17 @@
             width: 100%;
             text-align: center;
             border: 1px solid #e0e0e0; /* Subtle light border */
-            transition: all 0.3s ease-in-out; /* Smooth transition for any future interaction */
+            transition: background-color 0.5s ease, box-shadow 0.5s ease; /* Smooth transition for theme change */
             animation: fadeIn 0.8s ease-out; /* Simple fade-in animation */
+            position: relative; /* Ensure it's positioned correctly */
+            z-index: 2; /* Ensure card is above particles */
+        }
+
+        /* Dark mode card container */
+        html.dark .card-container {
+            background-color: #34495e; /* Darker blue-gray for card */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 5px 15px rgba(0, 0, 0, 0.15); /* Darker shadow in dark mode */
+            border-color: #4a607a; /* Darker border */
         }
 
         @keyframes fadeIn {
@@ -46,12 +78,20 @@
             color: #36454F; /* Charcoal - soft dark gray */
             margin-bottom: 1rem;
             line-height: 1.2;
+            transition: color 0.5s ease; /* Smooth transition for theme change */
+        }
+        html.dark .title {
+            color: #ecf0f1; /* Light text in dark mode */
         }
 
         .description {
             font-size: 1.125rem; /* Larger description text */
             color: #5A626F; /* Muted dark gray */
             margin-bottom: 2rem;
+            transition: color 0.5s ease; /* Smooth transition for theme change */
+        }
+        html.dark .description {
+            color: #bdc3c7; /* Lighter text in dark mode */
         }
 
         .task-button {
@@ -122,14 +162,19 @@
 
         /* Progress bar styling */
         .progress-bar-container {
-            width: 100%;
+            /* Light theme background */
             background-color: #c8e6c9; /* Light pastel green for empty bar */
             border-radius: 9999px;
             height: 14px; /* Even thicker progress bar */
             overflow: hidden;
             margin-top: 2rem; /* More space above */
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Inner shadow */
+            transition: background-color 0.5s ease; /* Smooth transition for theme change */
         }
+        html.dark .progress-bar-container {
+            background-color: #4a607a; /* Darker blue-gray for empty bar in dark mode */
+        }
+
         .progress-bar {
             height: 100%;
             width: 0%;
@@ -142,6 +187,10 @@
             color: #5A626F; /* Muted dark gray */
             margin-top: 0.75rem;
             font-weight: 500;
+            transition: color 0.5s ease; /* Smooth transition for theme change */
+        }
+        html.dark .progress-text {
+            color: #bdc3c7; /* Lighter text in dark mode */
         }
 
         /* Main action button */
@@ -194,13 +243,23 @@
             margin-top: 3rem; /* More space above this section */
             padding-top: 2rem;
             border-top: 1px solid #e0e0e0; /* Subtle light gray separator line */
+            transition: border-color 0.5s ease; /* Smooth transition for theme change */
         }
+        html.dark .donate-section {
+            border-color: #4a607a; /* Darker separator in dark mode */
+        }
+
         .donate-title {
             font-size: 1.75rem; /* Slightly smaller than main title */
             font-weight: 700;
             color: #36454F; /* Charcoal - soft dark gray */
             margin-bottom: 1.5rem;
+            transition: color 0.5s ease; /* Smooth transition for theme change */
         }
+        html.dark .donate-title {
+            color: #ecf0f1; /* Light text in dark mode */
+        }
+
         .donate-buttons-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr); /* 2 columns on small screens */
@@ -231,6 +290,91 @@
             background: linear-gradient(45deg, #ed8936, #dd6b20);
         }
 
+        /* Contact Form Section Styling */
+        .contact-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0; /* Separator line */
+            transition: border-color 0.5s ease;
+        }
+        html.dark .contact-section {
+            border-color: #4a607a; /* Darker separator in dark mode */
+        }
+        .contact-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #36454F;
+            margin-bottom: 1.5rem;
+            transition: color 0.5s ease;
+        }
+        html.dark .contact-title {
+            color: #ecf0f1;
+        }
+        .contact-form label {
+            display: block;
+            text-align: left;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #475569;
+            transition: color 0.5s ease;
+        }
+        html.dark .contact-form label {
+            color: #bdc3c7;
+        }
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1.25rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.5rem;
+            background-color: #f8fafc; /* Light input background */
+            color: #36454F;
+            transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
+        }
+        html.dark .contact-form input[type="text"],
+        html.dark .contact-form input[type="email"],
+        html.dark .contact-form textarea {
+            background-color: #4a607a; /* Dark input background */
+            border-color: #607d9b;
+            color: #ecf0f1;
+        }
+        .contact-form input[type="text"]:focus,
+        .contact-form input[type="email"]:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #6366f1; /* Focus border color */
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+        .contact-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        /* Specific font for the name input */
+        .contact-form input#name {
+            font-family: 'Roboto Mono', monospace; /* Apply Roboto Mono to the name input */
+        }
+
+        .contact-form button[type="submit"] {
+            background: linear-gradient(45deg, #4f46e5, #7c3aed);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 1.125rem;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .contact-form button[type="submit"]:hover {
+            background: linear-gradient(45deg, #4338ca, #6d28d9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
         /* Footer text styling */
         .footer-text {
             margin-top: 2.5rem; /* Space above footer text */
@@ -238,10 +382,53 @@
             color: #5A626F; /* Muted dark gray */
             font-weight: 500;
             padding-bottom: 1rem; /* Added padding-bottom for the text itself */
+            transition: color 0.5s ease; /* Smooth transition for theme change */
+        }
+        html.dark .footer-text {
+            color: #bdc3c7; /* Lighter text in dark mode */
         }
         .footer-text span {
             font-weight: 700; /* Make "G" bold */
         }
+
+        /* Dark Mode Toggle Button */
+        #darkModeToggle {
+            position: fixed; /* Changed to fixed */
+            top: 1.5rem;
+            right: 1.5rem;
+            background-color: #e0e0e0; /* Light gray button */
+            color: #333;
+            border: none;
+            border-radius: 9999px; /* Fully rounded */
+            padding: 0.75rem;
+            cursor: pointer;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            z-index: 10; /* Ensure it's above other elements */
+        }
+        #darkModeToggle:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        html.dark #darkModeToggle {
+            background-color: #5A626F; /* Darker gray button in dark mode */
+            color: #ecf0f1; /* Light icon in dark mode */
+        }
+
+        /* Particles.js container */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1; /* Behind the card-container */
+        }
+
 
         /* Responsive adjustments for smaller screens */
         @media (max-width: 640px) {
@@ -279,10 +466,29 @@
                 margin-top: 2rem;
                 padding-bottom: 0.5rem; /* Slightly less padding on mobile */
             }
+            #darkModeToggle {
+                top: 1rem; /* Adjust position for mobile */
+                right: 1rem;
+                padding: 0.6rem;
+                font-size: 1rem;
+            }
+            .contact-title {
+                font-size: 1.5rem;
+            }
+            .contact-form input[type="text"],
+            .contact-form input[type="email"],
+            .contact-form textarea,
+            .contact-form button[type="submit"] {
+                font-size: 1rem;
+                padding: 0.6rem;
+            }
         }
     </style>
 </head>
 <body>
+    <div id="particles-js"></div> <button id="darkModeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i> </button>
+
     <div class="card-container">
         <h1 class="title">Selesaikan Tugas untuk Membuka Tautan!</h1>
         <p class="description">
@@ -290,159 +496,4 @@
         </p>
 
         <div class="space-y-4 mb-6">
-            <a href="https://whatsapp.com/channel/0029VacommHBfxo8V9QWSx2O" target="_blank" id="whatsappTask" class="task-button whatsapp">
-                Ikuti Saluran WhatsApp
-            </a>
-
-            <a href="https://www.youtube.com/@Hanzerotes" target="_blank" id="youtubeTask" class="task-button youtube">
-                Subscribe Saluran YouTube
-            </a>
-        </div>
-
-        <div class="progress-bar-container">
-            <div id="progressBar" class="progress-bar"></div>
-        </div>
-        <p id="progressText" class="progress-text">0% Selesai</p>
-
-        <button id="openLinkButton" class="main-action-button" disabled>
-            Selesaikan tugas untuk membuka tautan
-        </button>
-
-        <div class="donate-section">
-            <h2 class="donate-title">Dukung Saya: Donate Robux!</h2>
-            <div class="donate-buttons-grid">
-                <a href="https://www.roblox.com/game-pass/952116430/Donate-5-Robux" target="_blank" class="donate-button">
-                    5 Robux
-                </a>
-                <a href="https://www.roblox.com/game-pass/890197076/Donate-10-Robux" target="_blank" class="donate-button">
-                    10 Robux
-                </a>
-                <a href="https://www.roblox.com/game-pass/890190002/Donate-50-Robux" target="_blank" class="donate-button">
-                    50 Robux
-                </a>
-                <a href="https://www.roblox.com/game-pass/928308990/Donate-100-Robux" target="_blank" class="donate-button">
-                    100 Robux
-                </a>
-            </div>
-        </div>
-        <p class="footer-text">
-            Dibuat dengan Suka Suka 😋<br>Terima kasih <span style="font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Segoe UI Symbol';">G</span>🐱
-        </p>
-        </div>
-
-    <script>
-        // Function to get URL parameter and decode Base64
-        function getUrlParameterAndDecode(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            if (results === null) {
-                return '';
-            } else {
-                try {
-                    // Decode the Base64 string
-                    return decodeURIComponent(atob(results[1].replace(/\+/g, ' ')));
-                } catch (e) {
-                    console.error("Error decoding URL parameter:", e);
-                    return ''; // Return empty string on error
-                }
-            }
-        };
-
-        // Define your target link here
-        // It will try to get the 'target' parameter from the URL and decode it.
-        // If not found or decoding fails, it defaults to 'https://roihanmuslimin.github.io/TaskLinkUnlocker123/'.
-        const TARGET_LINK = getUrlParameterAndDecode('target') || "https://roihanmuslimin.github.io/TaskLinkUnlocker123/"; // Default link jika tidak ada parameter target
-
-        // Get elements
-        const whatsappTask = document.getElementById('whatsappTask');
-        const youtubeTask = document.getElementById('youtubeTask');
-        const progressBar = document.getElementById('progressBar');
-        const progressText = document.getElementById('progressText');
-        const openLinkButton = document.getElementById('openLinkButton');
-
-        // Task completion status (ALWAYS reset on page load)
-        let isWhatsappCompleted = false; // Dihapus dari localStorage
-        let isYoutubeCompleted = false;  // Dihapus dari localStorage
-
-        // Function to update UI based on task status
-        function updateUI() {
-            let completedTasks = 0;
-
-            if (isWhatsappCompleted) {
-                whatsappTask.classList.add('completed');
-                whatsappTask.removeAttribute('href'); // Remove link to prevent re-clicking
-                whatsappTask.style.cursor = 'default';
-                completedTasks++;
-            } else {
-                whatsappTask.classList.remove('completed');
-                // Restore link if not completed, using the new link
-                whatsappTask.setAttribute('href', "https://whatsapp.com/channel/0029VacommHBfxo8V9QWSx2O");
-                whatsappTask.style.cursor = 'pointer';
-            }
-
-            if (isYoutubeCompleted) {
-                youtubeTask.classList.add('completed');
-                youtubeTask.removeAttribute('href'); // Remove link
-                youtubeTask.style.cursor = 'default';
-                completedTasks++;
-            } else {
-                youtubeTask.classList.remove('completed');
-                // Restore link if not completed, using the new link
-                youtubeTask.setAttribute('href', "https://www.youtube.com/@Hanzerotes");
-                youtubeTask.style.cursor = 'pointer';
-            }
-
-            // Update progress bar
-            const progressPercentage = (completedTasks / 2) * 100;
-            progressBar.style.width = `${progressPercentage}%`;
-            progressText.textContent = `${progressPercentage}% Selesai`;
-
-            // Enable/Disable main button
-            if (completedTasks === 2) {
-                openLinkButton.disabled = false;
-                openLinkButton.textContent = "Buka Tautan Sekarang!";
-            } else {
-                openLinkButton.disabled = true;
-                openLinkButton.textContent = "Selesaikan tugas untuk membuka tautan";
-            }
-        }
-
-        // Event Listeners
-        whatsappTask.addEventListener('click', (event) => {
-            if (isWhatsappCompleted) {
-                event.preventDefault(); // Mencegah membuka ulang jika sudah selesai
-            } else {
-                // Biarkan browser membuka tautan di tab baru (karena target="_blank")
-                // Tandai tugas selesai setelah jeda 3.1 detik
-                setTimeout(() => {
-                    isWhatsappCompleted = true;
-                    updateUI(); // Panggil updateUI setelah jeda
-                }, 3100); // Jeda 3.1 detik (3100ms)
-            }
-        });
-
-        youtubeTask.addEventListener('click', (event) => {
-            if (isYoutubeCompleted) {
-                event.preventDefault(); // Mencegah membuka ulang jika sudah selesai
-            } else {
-                // Biarkan browser membuka tautan di tab baru (karena target="_blank")
-                // Tandai tugas selesai setelah jeda 3.1 detik
-                setTimeout(() => {
-                    isYoutubeCompleted = true;
-                    updateUI(); // Panggil updateUI setelah jeda
-                }, 3100); // Jeda 3.1 detik (3100ms)
-            }
-        });
-
-        openLinkButton.addEventListener('click', () => {
-            if (!openLinkButton.disabled) {
-                window.open(TARGET_LINK, '_blank');
-            }
-        });
-
-        // Initial UI update on page load
-        document.addEventListener('DOMContentLoaded', updateUI);
-    </script>
-</body>
-</html>
+            <a href="https://whatsapp.com/channel
