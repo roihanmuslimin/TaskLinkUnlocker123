@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selesaikan Tugas untuk Membuka Tautan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for refined UI */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #cce7ff 100%); /* Soft gradient background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1.5rem; /* Consistent padding */
+            box-sizing: border-box;
+        }
+        .card-container {
+            background-color: #ffffff;
+            border-radius: 1.75rem; /* Even more rounded corners */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.08); /* Deeper, layered shadow */
+            padding: 2.5rem; /* Generous padding-top/left/right */
+            padding-bottom: 3.5rem; /* Increased padding-bottom for footer text */
+            max-width: 550px; /* Slightly wider for better content flow */
+            width: 100%;
+            text-align: center;
+            border: 1px solid #e0e0e0; /* Subtle light border */
+            transition: all 0.3s ease-in-out; /* Smooth transition for any future interaction */
+            animation: fadeIn 0.8s ease-out; /* Simple fade-in animation */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .title {
+            font-size: 2.25rem; /* Larger title */
+            font-weight: 800; /* Extra bold */
+            color: #1a202c; /* Darker text for contrast */
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .description {
+            font-size: 1.125rem; /* Larger description text */
+            color: #4a5568; /* Slightly darker gray */
+            margin-bottom: 2rem;
+        }
+
+        .task-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 1.5rem; /* More vertical padding */
+            border-radius: 1rem; /* Very rounded buttons */
+            font-weight: 700; /* Bolder text */
+            font-size: 1.05rem; /* Slightly larger font */
+            transition: all 0.3s ease; /* Smooth transitions for all properties */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Clearer button shadow */
+            margin-bottom: 1.25rem; /* More space between buttons */
+            width: 100%;
+            text-decoration: none; /* Remove underline for links */
+            position: relative; /* Needed for animation */
+            overflow: hidden; /* Ensure shadow doesn't overflow */
+        }
+        .task-button:hover:not(.completed) {
+            transform: translateY(-3px) scale(1.02); /* More pronounced hover effect */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Specific button styles */
+        .task-button.whatsapp {
+            background: linear-gradient(45deg, #25d366, #128c7e); /* WhatsApp gradient */
+            color: white;
+        }
+        .task-button.whatsapp:hover:not(.completed) {
+            background: linear-gradient(45deg, #1da851, #0f7065);
+        }
+        .task-button.youtube {
+            background: linear-gradient(45deg, #ff0000, #cc0000); /* YouTube gradient */
+            color: white;
+        }
+        .task-button.youtube:hover:not(.completed) {
+            background: linear-gradient(45deg, #cc0000, #990000);
+        }
+
+        /* Completed button state */
+        .task-button.completed {
+            background-color: #e2e8f0; /* Lighter gray for completed */
+            color: #94a3b8; /* Softer gray text */
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+            border: 1px solid #cbd5e1; /* Subtle border for completed */
+            animation: none; /* Disable all animations when completed */
+        }
+
+        /* Optimized Glow animation for uncompleted buttons */
+        @keyframes activeGlow {
+            0% {
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            50% {
+                /* Main shadow + subtle, expanding glow */
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 0 0 8px rgba(79, 70, 229, 0.1);
+            }
+            100% {
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        .task-button:not(.completed) {
+            animation: activeGlow 2s infinite ease-in-out; /* Apply glow to non-completed buttons */
+        }
+
+        /* Progress bar styling */
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e0e7ff; /* Lighter blue for empty bar */
+            border-radius: 9999px;
+            height: 14px; /* Even thicker progress bar */
+            overflow: hidden;
+            margin-top: 2rem; /* More space above */
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Inner shadow */
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6); /* Gradient for progress */
+            border-radius: 9999px;
+            transition: width 0.6s ease-in-out; /* Slower, smoother transition */
+        }
+        .progress-text {
+            font-size: 0.95rem; /* Slightly smaller text */
+            color: #64748b; /* Muted text color */
+            margin-top: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Main action button */
+        .main-action-button {
+            padding: 1.25rem 2.5rem; /* Larger padding */
+            border-radius: 1rem;
+            font-weight: 800; /* Extra bold */
+            font-size: 1.25rem; /* Larger font size */
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* More prominent shadow */
+            margin-top: 2.5rem; /* More space above */
+            cursor: pointer;
+        }
+        .main-action-button:disabled {
+            background-color: #cbd5e1; /* Lighter gray when disabled */
+            color: #94a3b8; /* Muted text */
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        .main-action-button:not(:disabled) {
+            background: linear-gradient(45deg, #4f46e5, #7c3aed); /* Vibrant gradient when active */
+            color: white;
+        }
+        .main-action-button:not(:disabled):hover {
+            background: linear-gradient(45deg, #4338ca, #6d28d9);
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Donate Robux Section Styling */
+        .donate-section {
+            margin-top: 3rem; /* More space above this section */
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0; /* Separator line */
+        }
+        .donate-title {
+            font-size: 1.75rem; /* Slightly smaller than main title */
+            font-weight: 700;
+            color: #2d3748; /* Darker gray */
+            margin-bottom: 1.5rem;
+        }
+        .donate-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns on small screens */
+            gap: 1rem; /* Space between buttons */
+        }
+        @media (min-width: 640px) { /* md breakpoint for Tailwind */
+            .donate-buttons-grid {
+                grid-template-columns: repeat(4, 1fr); /* 4 columns on larger screens */
+            }
+        }
+        .donate-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 1.2rem; /* Smaller padding than task buttons */
+            border-radius: 0.75rem; /* Rounded corners */
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            color: white;
+            background-color: #f6ad55; /* Orange-like color for Robux */
+            background: linear-gradient(45deg, #f6ad55, #ed8936); /* Orange gradient */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+        .donate-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(45deg, #ed8936, #dd6b20);
+        }
+
+        /* Footer text styling */
+        .footer-text {
+            margin-top: 2.5rem; /* Space above footer text */
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 500;
+            padding-bottom: 1rem; /* Added padding-bottom for the text itself */
+        }
+        .footer-text span {
+            font-weight: 700; /* Make "G" bold */
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem; /* Slightly less padding on body for very small screens */
+            }
+            .card-container {
+                padding: 1.5rem; /* Reduce padding on small screens */
+                padding-bottom: 2.5rem; /* Adjusted padding-bottom for mobile */
+                border-radius: 1.25rem;
+            }
+            .title {
+                font-size: 1.75rem; /* Adjust title size */
+            }
+            .description {
+                font-size: 1rem; /* Adjust description size */
+            }
+            .task-button {
+                padding: 0.9rem 1rem;
+                font-size: 1rem;
+            }
+            .main-action-button {
+                padding: 1rem 1.5rem;
+                font-size: 1.1rem;
+            }
+            .donate-title {
+                font-size: 1.5rem;
+            }
+            .donate-button {
+                padding: 0.7rem 1rem;
+                font-size: 0.9rem;
+            }
+            .footer-text {
+                font-size: 0.85rem;
+                margin-top: 2rem;
+                padding-bottom: 0.5rem; /* Slightly less padding on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <h1 class="title">Selesaikan Tugas untuk Membuka Tautan!</h1>
+        <p class="description">
+            Cukup selesaikan 2 tugas sederhana di bawah ini untuk mendapatkan akses ke tautan eksklusif kamu.
+        </p>
+
+        <div class="space-y-4 mb-6">
+            <a href="https://whatsapp.com/channel/0029VacommHBfxo8V9QWSx2O" target="_blank" id="whatsappTask" class="task-button whatsapp">
+                Ikuti Saluran WhatsApp
+            </a>
+
+            <a href="https://www.youtube.com/@Hanzerotes" target="_blank" id="youtubeTask" class="task-button youtube">
+                Subscribe Saluran YouTube
+            </a>
+        </div>
+
+        <div class="progress-bar-container">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <p id="progressText" class="progress-text">0% Selesai</p>
+
+        <button id="openLinkButton" class="main-action-button" disabled>
+            Selesaikan tugas untuk membuka tautan
+        </button>
+
+        <div class="donate-section">
+            <h2 class="donate-title">Dukung saya: Donate Robux!</h2>
+            <div class="donate-buttons-grid">
+                <a href="https://www.roblox.com/game-pass/1241670421/Donate-5-Robux" target="_blank" class="donate-button">
+                    5 Robux
+                </a>
+                <a href="https://www.roblox.com/game-pass/1241496829/Donate-10-Robux" target="_blank" class="donate-button">
+                    10 Robux
+                </a>
+                <a href="https://www.roblox.com/game-pass/1241299423/Donate-50-Robux" target="_blank" class="donate-button">
+                    50 Robux
+                </a>
+                <a href="https://www.roblox.com/game-pass/13600173502/Donate-100-Robux" target="_blank" class="donate-button">
+                    100 Robux
+                </a>
+            </div>
+        </div>
+        <p class="footer-text">
+            Dibuat dengan Suka Suka 😋<br>Terima kasih <span style="font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Segoe UI Symbol';">G</span>🐱
+        </p>
+        </div>
+
+    <script>
+        // Function to get URL parameter and decode Base64
+        function getUrlParameterAndDecode(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            if (results === null) {
+                return '';
+            } else {
+                try {
+                    // Decode the Base64 string
+                    return decodeURIComponent(atob(results[1].replace(/\+/g, ' ')));
+                } catch (e) {
+                    console.error("Error decoding URL parameter:", e);
+                    return ''; // Return empty string on error
+                }
+            }
+        };
+
+        // Define your target link here
+        // It will try to get the 'target' parameter from the URL and decode it.
+        // If not found or decoding fails, it defaults to 'https://www.google.com'.
+        const TARGET_LINK = getUrlParameterAndDecode('target') || "https://www.google.com"; // Ganti dengan tautan tujuan default Anda
+
+        // Get elements
+        const whatsappTask = document.getElementById('whatsappTask');
+        const youtubeTask = document.getElementById('youtubeTask');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const openLinkButton = document.getElementById('openLinkButton');
+
+        // Task completion status (initialized from localStorage)
+        let isWhatsappCompleted = localStorage.getItem('isWhatsappCompleted') === 'true';
+        let isYoutubeCompleted = localStorage.getItem('isYoutubeCompleted') === 'true';
+
+        // Function to update UI based on task status
+        function updateUI() {
+            let completedTasks = 0;
+
+            if (isWhatsappCompleted) {
+                whatsappTask.classList.add('completed');
+                whatsappTask.removeAttribute('href'); // Remove link to prevent re-clicking
+                whatsappTask.style.cursor = 'default';
+                completedTasks++;
+            } else {
+                whatsappTask.classList.remove('completed');
+                // Restore link if not completed, using the new link
+                whatsappTask.setAttribute('href', "https://whatsapp.com/channel/0029VacommHBfxo8V9QWSx2O");
+                whatsappTask.style.cursor = 'pointer';
+            }
+
+            if (isYoutubeCompleted) {
+                youtubeTask.classList.add('completed');
+                youtubeTask.removeAttribute('href'); // Remove link
+                youtubeTask.style.cursor = 'default';
+                completedTasks++;
+            } else {
+                youtubeTask.classList.remove('completed');
+                // Restore link if not completed, using the new link
+                youtubeTask.setAttribute('href', "https://www.youtube.com/@Hanzerotes");
+                youtubeTask.style.cursor = 'pointer';
+            }
+
+            // Update progress bar
+            const progressPercentage = (completedTasks / 2) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${progressPercentage}% Selesai`;
+
+            // Enable/Disable main button
+            if (completedTasks === 2) {
+                openLinkButton.disabled = false;
+                openLinkButton.textContent = "Buka Tautan Sekarang!";
+            } else {
+                openLinkButton.disabled = true;
+                openLinkButton.textContent = "Selesaikan tugas untuk membuka tautan";
+            }
+        }
+
+        // Event Listeners
+        whatsappTask.addEventListener('click', (event) => {
+            if (isWhatsappCompleted) {
+                event.preventDefault(); // Mencegah membuka ulang jika sudah selesai
+            } else {
+                // Biarkan browser membuka tautan di tab baru (karena target="_blank")
+                // Tandai tugas selesai setelah jeda 3.5 detik
+                setTimeout(() => {
+                    isWhatsappCompleted = true;
+                    localStorage.setItem('isWhatsappCompleted', 'true');
+                    updateUI();
+                }, 3500); // Jeda 3.5 detik (3500ms)
+            }
+        });
+
+        youtubeTask.addEventListener('click', (event) => {
+            if (isYoutubeCompleted) {
+                event.preventDefault(); // Mencegah membuka ulang jika sudah selesai
+            } else {
+                // Biarkan browser membuka tautan di tab baru (karena target="_blank")
+                // Tandai tugas selesai setelah jeda 3.5 detik
+                setTimeout(() => {
+                    isYoutubeCompleted = true;
+                    localStorage.setItem('isYoutubeCompleted', 'true');
+                    updateUI();
+                }, 3500); // Jeda 3.5 detik (3500ms)
+            }
+        });
+
+        openLinkButton.addEventListener('click', () => {
+            if (!openLinkButton.disabled) {
+                window.open(TARGET_LINK, '_blank');
+            }
+        });
+
+        // Initial UI update on page load
+        document.addEventListener('DOMContentLoaded', updateUI);
+    </script>
+</body>
+</html>
+
+  
