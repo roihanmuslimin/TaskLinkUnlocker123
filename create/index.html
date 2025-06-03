@@ -284,7 +284,53 @@
         .history-item-btn.copy:hover {
             background-color: #8b5cf6;
         }
-        /* Removed .history-item-btn.delete styles */
+        .history-item-btn.delete {
+            background-color: #ef4444; /* Red for delete */
+            color: white;
+        }
+        .history-item-btn.delete:hover {
+            background-color: #dc2626;
+        }
+
+        /* Custom Modal Styles */
+        .custom-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;
+            z-index: 1000; opacity: 0; transition: opacity 0.3s ease-out;
+        }
+        .custom-modal-overlay.show {
+            opacity: 1;
+        }
+        .custom-modal-content {
+            background-color: white; padding: 2rem; border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; max-width: 400px;
+            font-family: 'Inter', sans-serif; transform: translateY(-20px); transition: transform 0.3s ease-out;
+        }
+        .custom-modal-overlay.show .custom-modal-content {
+            transform: translateY(0);
+        }
+        .custom-modal-message {
+            margin-bottom: 1.5rem; font-size: 1.1rem; color: #334155;
+        }
+        .custom-modal-buttons {
+            display: flex; justify-content: center; gap: 1rem;
+        }
+        .custom-modal-btn {
+            padding: 0.75rem 1.5rem; border: none; border-radius: 0.75rem;
+            cursor: pointer; font-weight: 600; transition: background-color 0.2s ease;
+        }
+        .custom-modal-btn.confirm {
+            background-color: #ef4444; color: white;
+        }
+        .custom-modal-btn.confirm:hover {
+            background-color: #dc2626;
+        }
+        .custom-modal-btn.cancel, .custom-modal-btn.ok {
+            background-color: #cbd5e1; color: #4a5568;
+        }
+        .custom-modal-btn.cancel:hover, .custom-modal-btn.ok:hover {
+            background-color: #a0aec0;
+        }
 
         /* Responsive adjustments for history */
         @media (min-width: 641px) { /* Apply flex for larger screens */
@@ -312,7 +358,7 @@
 
         <div class="input-group">
             <label for="targetText">Teks untuk diubah (URL Target):</label>
-            <textarea id="targetText" placeholder="Contoh: https://linkanda.com/file-rahasia"></textarea>
+            <textarea id="targetText" placeholder="Contoh: https://pastebin.com/00000"></textarea>
             <p id="urlError" class="error-message">Mohon masukkan URL yang valid (misalnya, dimulai dengan http:// atau https://).</p>
         </div>
 
@@ -367,7 +413,7 @@
         // URL dasar untuk aplikasi Task Link Unlocker
         const BASE_URL = "https://roihanmuslimin.github.io/TaskLinkUnlocker123/";
         const HISTORY_STORAGE_KEY = 'urlUnlockerHistory';
-        const MAX_HISTORY_ITEMS = 5; // Batasi riwayat hingga 5 item
+        const MAX_HISTORY_ITEMS = 7; // Batasi riwayat hingga 7 item
 
         /**
          * Memvalidasi apakah string adalah format URL yang valid.
@@ -410,21 +456,123 @@
         }
 
         /**
+         * Menampilkan dialog pesan kustom.
+         * @param {string} message - Pesan yang akan ditampilkan.
+         * @param {function} onOk - Callback ketika tombol OK ditekan.
+         */
+        function showCustomMessage(message, onOk = () => {}) {
+            const modalOverlay = document.createElement('div');
+            modalOverlay.classList.add('custom-modal-overlay');
+
+            const modalContent = document.createElement('div');
+            modalContent.classList.add('custom-modal-content');
+
+            const messagePara = document.createElement('p');
+            messagePara.classList.add('custom-modal-message');
+            messagePara.textContent = message;
+
+            const buttonContainer = document.createElement('div');
+            buttonContainer.classList.add('custom-modal-buttons');
+
+            const okBtn = document.createElement('button');
+            okBtn.textContent = 'OK';
+            okBtn.classList.add('custom-modal-btn', 'ok');
+            okBtn.onclick = () => {
+                modalOverlay.classList.remove('show');
+                modalOverlay.addEventListener('transitionend', () => {
+                    if (modalOverlay.parentNode) {
+                        modalOverlay.parentNode.removeChild(modalOverlay);
+                    }
+                    onOk();
+                }, { once: true });
+            };
+
+            buttonContainer.appendChild(okBtn);
+            modalContent.appendChild(messagePara);
+            modalContent.appendChild(buttonContainer);
+            modalOverlay.appendChild(modalContent);
+            document.body.appendChild(modalOverlay);
+
+            // Trigger animation
+            setTimeout(() => modalOverlay.classList.add('show'), 10);
+        }
+
+        /**
+         * Menampilkan dialog konfirmasi kustom.
+         * @param {string} message - Pesan yang akan ditampilkan.
+         * @param {function} onConfirm - Callback jika pengguna mengkonfirmasi.
+         * @param {function} onCancel - Callback jika pengguna membatalkan.
+         */
+        function showCustomConfirmation(message, onConfirm, onCancel = () => {}) {
+            const modalOverlay = document.createElement('div');
+            modalOverlay.classList.add('custom-modal-overlay');
+
+            const modalContent = document.createElement('div');
+            modalContent.classList.add('custom-modal-content');
+
+            const messagePara = document.createElement('p');
+            messagePara.classList.add('custom-modal-message');
+            messagePara.textContent = message;
+
+            const buttonContainer = document.createElement('div');
+            buttonContainer.classList.add('custom-modal-buttons');
+
+            const confirmBtn = document.createElement('button');
+            confirmBtn.textContent = 'Ya, Hapus';
+            confirmBtn.classList.add('custom-modal-btn', 'confirm');
+            confirmBtn.onclick = () => {
+                modalOverlay.classList.remove('show');
+                modalOverlay.addEventListener('transitionend', () => {
+                    if (modalOverlay.parentNode) {
+                        modalOverlay.parentNode.removeChild(modalOverlay);
+                    }
+                    onConfirm();
+                }, { once: true });
+            };
+
+            const cancelBtn = document.createElement('button');
+            cancelBtn.textContent = 'Batal';
+            cancelBtn.classList.add('custom-modal-btn', 'cancel');
+            cancelBtn.onclick = () => {
+                modalOverlay.classList.remove('show');
+                modalOverlay.addEventListener('transitionend', () => {
+                    if (modalOverlay.parentNode) {
+                        modalOverlay.parentNode.removeChild(modalOverlay);
+                    }
+                    onCancel();
+                }, { once: true });
+            };
+
+            buttonContainer.appendChild(confirmBtn);
+            buttonContainer.appendChild(cancelBtn);
+            modalContent.appendChild(messagePara);
+            modalContent.appendChild(buttonContainer);
+            modalOverlay.appendChild(modalContent);
+            document.body.appendChild(modalOverlay);
+
+            // Trigger animation
+            setTimeout(() => modalOverlay.classList.add('show'), 10);
+        }
+
+
+        /**
          * Memperbarui status tombol generate berdasarkan validasi input.
          */
         function updateGenerateButtonStatus() {
-            const isTargetTextValid = isValidUrl(targetTextInput.value.trim());
-            const isDisplayTextFilled = displayTextInput.value.trim() !== "";
+            const targetText = targetTextInput.value.trim();
+            const isTargetTextValid = isValidUrl(targetText);
+            const displayText = displayTextInput.value.trim();
+            const isDisplayTextFilled = displayText.length > 0;
 
             // Tampilkan/sembunyikan error untuk URL Target
-            if (targetTextInput.value.trim() !== "" && !isTargetTextValid) {
+            if (targetText !== "" && !isTargetTextValid) {
                 urlError.classList.add('show');
             } else {
                 urlError.classList.remove('show');
             }
 
             // Tampilkan/sembunyikan error untuk Teks Tampilan
-            if (displayTextInput.value.trim() === "") {
+            if (!isDisplayTextFilled) {
                 textError.classList.add('show');
             } else {
                 textError.classList.remove('show');
@@ -456,6 +604,7 @@
 
             // Batasi jumlah item riwayat
             if (history.length > MAX_HISTORY_ITEMS) {
+                // Jika melebihi batas, hapus item tertua (terakhir)
                 history = history.slice(0, MAX_HISTORY_ITEMS);
             }
 
@@ -485,7 +634,7 @@
                 historySection.classList.remove('hidden');
             }
 
-            history.forEach((item) => { // Hapus 'index' karena tidak lagi diperlukan untuk tombol hapus individual
+            history.forEach((item, index) => { // Kembali sertakan 'index' untuk penghapusan per item
                 const historyItemDiv = document.createElement('div');
                 historyItemDiv.classList.add('history-item');
 
@@ -503,123 +652,85 @@
                 copyItemBtn.innerHTML = '<i class="fas fa-copy"></i> Salin';
                 copyItemBtn.title = 'Salin URL ini dan isi form';
                 copyItemBtn.addEventListener('click', () => {
-                    // Isi kembali input form
                     targetTextInput.value = item.target;
                     displayTextInput.value = item.display;
-                    generatedUrlDisplay.textContent = item.url; // Tampilkan juga di output utama
-                    outputSection.classList.remove('hidden'); // Pastikan output section terlihat
-                    copyMessage.classList.remove('show'); // Sembunyikan pesan salin
-                    updateGenerateButtonStatus(); // Perbarui status tombol generate
-                    // Gulir ke atas ke form input
+                    generatedUrlDisplay.textContent = item.url;
+                    outputSection.classList.remove('hidden');
+                    copyMessage.classList.remove('show');
+                    updateGenerateButtonStatus();
                     targetTextInput.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
                 actionsDiv.appendChild(copyItemBtn);
 
-                // Tombol "Hapus" individual telah dihapus dari sini
+                // Tombol "Hapus" untuk item riwayat (dikembalikan)
+                const deleteItemBtn = document.createElement('button');
+                deleteItemBtn.classList.add('history-item-btn', 'delete');
+                deleteItemBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Hapus';
+                deleteItemBtn.title = 'Hapus item ini dari riwayat';
+                deleteItemBtn.addEventListener('click', () => deleteHistoryItem(index)); // Panggil fungsi hapus dengan indeks
+                actionsDiv.appendChild(deleteItemBtn);
 
                 historyItemDiv.appendChild(actionsDiv);
                 historyList.appendChild(historyItemDiv);
             });
         }
 
-        // Fungsi deleteHistoryItem() individual telah dihapus
+        /**
+         * Menghapus item riwayat berdasarkan indeks.
+         * @param {number} index - Indeks item yang akan dihapus.
+         */
+        function deleteHistoryItem(index) {
+            showCustomConfirmation("Apakah Anda yakin ingin menghapus item ini?", () => {
+                let history = loadHistory();
+                if (index > -1 && index < history.length) {
+                    history.splice(index, 1); // Hapus 1 item di indeks tertentu
+                    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
+                    renderHistory(); // Render ulang riwayat
+                }
+            });
+        }
 
         /**
          * Menghapus semua item dari riwayat.
          */
         function clearAllHistory() {
-            // Menggunakan konfirmasi kustom yang lebih baik daripada alert/confirm
             showCustomConfirmation("Apakah Anda yakin ingin menghapus semua riwayat?", () => {
                 localStorage.removeItem(HISTORY_STORAGE_KEY);
-                renderHistory(); // Render ulang riwayat (akan menyembunyikan bagian riwayat)
+                renderHistory();
             });
         }
 
-        /**
-         * Menampilkan dialog konfirmasi kustom.
-         * @param {string} message - Pesan yang akan ditampilkan.
-         * @param {function} onConfirm - Callback jika pengguna mengkonfirmasi.
-         */
-        function showCustomConfirmation(message, onConfirm) {
-            // Buat elemen modal
-            const modalOverlay = document.createElement('div');
-            modalOverlay.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background-color: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;
-                z-index: 1000;
-            `;
+        // Event listener untuk input real-time pada kolom URL Target
+        targetTextInput.addEventListener('input', updateGenerateButtonStatus);
 
-            const modalContent = document.createElement('div');
-            modalContent.style.cssText = `
-                background-color: white; padding: 2rem; border-radius: 1rem;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; max-width: 400px;
-                font-family: 'Inter', sans-serif;
-            `;
-
-            const messagePara = document.createElement('p');
-            messagePara.textContent = message;
-            messagePara.style.cssText = `
-                margin-bottom: 1.5rem; font-size: 1.1rem; color: #334155;
-            `;
-
-            const buttonContainer = document.createElement('div');
-            buttonContainer.style.cssText = `
-                display: flex; justify-content: center; gap: 1rem;
-            `;
-
-            const confirmBtn = document.createElement('button');
-            confirmBtn.textContent = 'Ya, Hapus';
-            confirmBtn.style.cssText = `
-                background-color: #ef4444; color: white; padding: 0.75rem 1.5rem;
-                border: none; border-radius: 0.75rem; cursor: pointer; font-weight: 600;
-                transition: background-color 0.2s ease;
-            `;
-            confirmBtn.onmouseover = () => confirmBtn.style.backgroundColor = '#dc2626';
-            confirmBtn.onmouseout = () => confirmBtn.style.backgroundColor = '#ef4444';
-            confirmBtn.onclick = () => {
-                document.body.removeChild(modalOverlay);
-                onConfirm();
-            };
-
-            const cancelBtn = document.createElement('button');
-            cancelBtn.textContent = 'Batal';
-            cancelBtn.style.cssText = `
-                background-color: #cbd5e1; color: #4a5568; padding: 0.75rem 1.5rem;
-                border: none; border-radius: 0.75rem; cursor: pointer; font-weight: 600;
-                transition: background-color 0.2s ease;
-            `;
-            cancelBtn.onmouseover = () => cancelBtn.style.backgroundColor = '#a0aec0';
-            cancelBtn.onmouseout = () => cancelBtn.style.backgroundColor = '#cbd5e1';
-            cancelBtn.onclick = () => {
-                document.body.removeChild(modalOverlay);
-            };
-
-            buttonContainer.appendChild(confirmBtn);
-            buttonContainer.appendChild(cancelBtn);
-            modalContent.appendChild(messagePara);
-            modalContent.appendChild(buttonContainer);
-            modalOverlay.appendChild(modalContent);
-            document.body.appendChild(modalOverlay);
-        }
-
+        // Event listener untuk input real-time pada kolom Teks yang akan ditampilkan
+        displayTextInput.addEventListener('input', updateGenerateButtonStatus);
 
         // Event listener untuk tombol "Generate URL"
         generateButton.addEventListener('click', () => {
             const targetText = targetTextInput.value.trim();
             let displayText = displayTextInput.value.trim();
 
-            // Lakukan validasi akhir sebelum generate
+            // Validasi input form
             if (targetText === "" || !isValidUrl(targetText)) {
                 urlError.classList.add('show');
-                // Mengganti alert() dengan konfirmasi kustom jika diperlukan di sini
-                // Untuk validasi input, alert() masih bisa diterima untuk feedback cepat
-                alert("Mohon masukkan URL target yang valid.");
+                showCustomMessage("Mohon masukkan URL target yang valid.");
                 return;
             }
             if (displayText === "") {
                 textError.classList.add('show');
-                alert("Mohon masukkan teks yang akan ditampilkan.");
+                showCustomMessage("Mohon masukkan teks yang akan ditampilkan.");
                 return;
+            }
+
+            // Cek batas riwayat sebelum generate
+            const currentHistory = loadHistory();
+            if (currentHistory.length >= MAX_HISTORY_ITEMS) {
+                showCustomMessage(`Riwayat sudah penuh (${MAX_HISTORY_ITEMS} item). Mohon hapus salah satu item riwayat untuk membuat yang baru.`, () => {
+                    // Gulir ke bagian riwayat setelah pesan ditutup
+                    historySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+                return; // Hentikan proses generate
             }
 
             // Encode URL target ke Base64
@@ -661,7 +772,7 @@
                 }, 2000);
             } catch (err) {
                 console.error('Gagal menyalin URL:', err);
-                alert("Gagal menyalin URL. Silakan salin secara manual: " + urlToCopy);
+                showCustomMessage("Gagal menyalin URL. Silakan salin secara manual: " + urlToCopy);
             } finally {
                 document.body.removeChild(tempTextArea);
             }
