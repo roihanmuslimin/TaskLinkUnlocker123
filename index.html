@@ -123,6 +123,13 @@
         .task-button.whatsapp:hover:not(.completed) {
             background: linear-gradient(45deg, #1da851, #0f7065);
         }
+        .task-button.roblox {
+            background: linear-gradient(45deg, #4455FF, #8844FF); /* Roblox-like gradient (blue to purple) */
+            color: white;
+        }
+        .task-button.roblox:hover:not(.completed) {
+            background: linear-gradient(45deg, #3344EE, #7733EE);
+        }
         .task-button.youtube {
             background: linear-gradient(45deg, #ff0000, #cc0000); /* YouTube gradient */
             color: white;
@@ -140,6 +147,33 @@
             transform: none;
             border: 1px solid #cbd5e1; /* Subtle border for completed */
             animation: none; /* Disable all animations when completed */
+        }
+        .task-button.completed .checkmark {
+            margin-left: 0.5rem;
+            color: #25d366; /* Green checkmark */
+            font-size: 1.2em;
+        }
+        html.dark .task-button.completed {
+            background-color: #4a607a;
+            color: #bdc3c7;
+            border-color: #607d9b;
+        }
+        html.dark .task-button.completed .checkmark {
+            color: #25d366; /* Green checkmark remains green */
+        }
+
+        /* Spinner styling */
+        .task-button .spinner {
+            margin-left: 0.5rem;
+            font-size: 1.2em;
+            display: none; /* Hidden by default */
+        }
+        .task-button.loading .spinner {
+            display: inline-block; /* Show when loading */
+        }
+        .task-button.loading .button-text,
+        .task-button.loading .checkmark {
+            display: none; /* Hide text and checkmark when loading */
         }
 
         /* Optimized Glow animation for uncompleted buttons */
@@ -283,6 +317,11 @@
             background: linear-gradient(45deg, #f6ad55, #ed8936); /* Orange gradient */
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.2s ease;
+        }
+        /* New: Animation for active (pressed) state of donate buttons */
+        .donate-button:active {
+            transform: scale(0.95); /* Shrink slightly when pressed */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Reduce shadow */
         }
         .donate-button:hover {
             transform: translateY(-2px);
@@ -492,23 +531,33 @@
     <div class="card-container">
         <h1 class="title">Selesaikan Tugas untuk Membuka Tautan!</h1>
         <p class="description">
-            Cukup selesaikan 2 tugas sederhana di bawah ini untuk mendapatkan akses ke tautan eksklusif kamu.
+            Selesaikan minimal **2** tugas di bawah ini untuk mendapatkan akses ke tautan eksklusif kamu.
         </p>
 
         <div class="space-y-4 mb-6">
             <a href="https://whatsapp.com/channel/0029VacommHBfxo8V9QWSx2O" target="_blank" id="whatsappTask" class="task-button whatsapp">
-                Ikuti Saluran WhatsApp
+                <span class="button-text">Ikuti Saluran WhatsApp</span>
+                <i class="fas fa-spinner fa-spin spinner"></i>
+                <span class="checkmark">✓</span>
+            </a>
+
+            <a href="https://www.roblox.com/share?code=6359c56a5cfdde4eba2fea110af477da&type=Profile&source=ProfileShare&stamp=1748910192359" target="_blank" id="robloxTask" class="task-button roblox">
+                <span class="button-text">Follow Akun Roblox</span>
+                <i class="fas fa-spinner fa-spin spinner"></i>
+                <span class="checkmark">✓</span>
             </a>
 
             <a href="https://www.youtube.com/@Hanzerotes" target="_blank" id="youtubeTask" class="task-button youtube">
-                Subscribe Saluran YouTube
+                <span class="button-text">Subscribe Saluran YouTube</span>
+                <i class="fas fa-spinner fa-spin spinner"></i>
+                <span class="checkmark">✓</span>
             </a>
         </div>
 
         <div class="progress-bar-container">
             <div id="progressBar" class="progress-bar"></div>
         </div>
-        <p id="progressText" class="progress-text">0% Selesai</p>
+        <p id="progressText" class="progress-text">Selesaikan minimal 2 tugas untuk membuka tautan eksklusif</p>
 
         <button id="openLinkButton" class="main-action-button" disabled>
             Selesaikan tugas untuk membuka tautan
@@ -585,18 +634,23 @@
         };
 
         // Define your target link here
-        // It will try to get the 'target' parameter from the URL and decode it (Base64).
-        // If not found or decoding fails, it defaults to 'https://roihanmuslimin.github.io/TaskLinkUnlocker123/'.
-        const TARGET_LINK = getUrlParameterAndBase64Decode('target') || "https://roihanmuslimin.github.io/TaskLinkUnlocker123/"; // Default link jika tidak ada parameter target
+        const TARGET_LINK = getUrlParameterAndBase64Decode('target') || "https://roihanmuslimin.github.io/TaskLinkUnlocker123/";
 
-        // NEW: Get dynamic display text for the main button from 'disphanzer' parameter (plain text)
+        // Get dynamic display text for the main button from 'disphanzer' parameter (plain text)
         const DISPLAY_TEXT = getUrlParameter('disphanzer') || 'script'; // Default to 'script' if no 'disphanzer' param
+
+        // Hardcoded text for each task button (removed URL parameter dependency)
+        const WA_BUTTON_TEXT = 'Ikuti Saluran WhatsApp';
+        const ROBLOX_BUTTON_TEXT = 'Follow Akun Roblox';
+        const YOUTUBE_BUTTON_TEXT = 'Subscribe Saluran YouTube';
+
 
         // Get elements
         const htmlElement = document.documentElement;
         const darkModeToggle = document.getElementById('darkModeToggle');
         const whatsappTask = document.getElementById('whatsappTask');
         const youtubeTask = document.getElementById('youtubeTask');
+        const robloxTask = document.getElementById('robloxTask');
         const progressBar = document.getElementById('progressBar');
         const progressText = document.getElementById('progressText');
         const openLinkButton = document.getElementById('openLinkButton');
@@ -604,6 +658,7 @@
         // Task completion status (ALWAYS reset on page load)
         let isWhatsappCompleted = false;
         let isYoutubeCompleted = false;
+        let isRobloxCompleted = false;
 
         // --- Dark Mode Logic ---
         const themeKey = 'theme';
@@ -647,71 +702,100 @@
         });
         // --- End Dark Mode Logic ---
 
+        // Function to update a single task button's UI
+        function updateTaskButtonUI(taskElement, isCompleted, defaultText) {
+            const buttonTextSpan = taskElement.querySelector('.button-text');
+            const checkmarkSpan = taskElement.querySelector('.checkmark');
+            const spinnerIcon = taskElement.querySelector('.spinner');
 
-        // Function to update UI based on task status
+            if (isCompleted) {
+                taskElement.classList.add('completed');
+                taskElement.removeAttribute('href');
+                taskElement.style.cursor = 'default';
+                buttonTextSpan.textContent = "Tugas Selesai"; // Changed to "Tugas Selesai"
+                checkmarkSpan.style.display = 'inline-block'; // Show checkmark
+                spinnerIcon.style.display = 'none'; // Hide spinner
+                taskElement.classList.remove('loading'); // Remove loading class
+            } else {
+                taskElement.classList.remove('completed');
+                // Restore link, using the new link
+                if (taskElement.id === 'whatsappTask') taskElement.setAttribute('href', "https://whatsapp.com/channel/0029VacommHBfxo8V9QWSx2O");
+                if (taskElement.id === 'robloxTask') taskElement.setAttribute('href', "https://www.roblox.com/share?code=6359c56a5cfdde4eba2fea110af477da&type=Profile&source=ProfileShare&stamp=1748910192359");
+                if (taskElement.id === 'youtubeTask') taskElement.setAttribute('href', "https://www.youtube.com/@Hanzerotes");
+
+                taskElement.style.cursor = 'pointer';
+                buttonTextSpan.textContent = defaultText; // Set text to original default
+                checkmarkSpan.style.display = 'none'; // Hide checkmark
+                spinnerIcon.style.display = 'none'; // Hide spinner
+                taskElement.classList.remove('loading'); // Remove loading class
+            }
+        }
+
+        // Function to update overall UI based on task status
         function updateUI() {
             let completedTasks = 0;
 
-            if (isWhatsappCompleted) {
-                whatsappTask.classList.add('completed');
-                whatsappTask.removeAttribute('href'); // Remove link to prevent re-clicking
-                whatsappTask.style.cursor = 'default';
-                completedTasks++;
-            } else {
-                whatsappTask.classList.remove('completed');
-                // Restore link if not completed, using the new link
-                whatsappTask.setAttribute('href', "https://whatsapp.com/channel/0029VacommHBfxo8V9QWSx2O");
-                whatsappTask.style.cursor = 'pointer';
-            }
+            updateTaskButtonUI(whatsappTask, isWhatsappCompleted, WA_BUTTON_TEXT);
+            if (isWhatsappCompleted) completedTasks++;
 
-            if (isYoutubeCompleted) {
-                youtubeTask.classList.add('completed');
-                youtubeTask.removeAttribute('href'); // Remove link
-                youtubeTask.style.cursor = 'default';
-                completedTasks++;
-            } else {
-                youtubeTask.classList.remove('completed');
-                // Restore link if not completed, using the new link
-                youtubeTask.setAttribute('href', "https://www.youtube.com/@Hanzerotes");
-                youtubeTask.style.cursor = 'pointer';
-            }
+            updateTaskButtonUI(robloxTask, isRobloxCompleted, ROBLOX_BUTTON_TEXT);
+            if (isRobloxCompleted) completedTasks++;
 
-            // Update progress bar
-            const progressPercentage = (completedTasks / 2) * 100;
+            updateTaskButtonUI(youtubeTask, isYoutubeCompleted, YOUTUBE_BUTTON_TEXT);
+            if (isYoutubeCompleted) completedTasks++;
+
+            // Update progress bar and text
+            const totalTasksNeeded = 2; // Define how many tasks are needed
+            if (completedTasks >= totalTasksNeeded) {
+                progressText.textContent = `Semua tugas selesai!`; // Message when enough tasks are done
+            } else {
+                progressText.textContent = `Selesaikan minimal ${totalTasksNeeded} tugas untuk membuka tautan eksklusif`; // Updated progress text
+            }
+            const progressPercentage = (completedTasks / 3) * 100; // Still show progress out of 3
             progressBar.style.width = `${progressPercentage}%`;
-            progressText.textContent = `${progressPercentage}% Selesai`;
+
 
             // Enable/Disable main button
-            if (completedTasks === 2) {
+            if (completedTasks >= totalTasksNeeded) {
                 openLinkButton.disabled = false;
-                openLinkButton.textContent = `Buka ${DISPLAY_TEXT} Sekarang!`; // Use dynamic text
+                openLinkButton.textContent = `Buka ${DISPLAY_TEXT} Sekarang!`;
             } else {
                 openLinkButton.disabled = true;
-                openLinkButton.textContent = `Selesaikan tugas untuk membuka ${DISPLAY_TEXT}`; // Use dynamic text
+                openLinkButton.textContent = `Selesaikan tugas untuk membuka ${DISPLAY_TEXT}`;
+            }
+        }
+
+        // Generic function to handle task clicks
+        function handleTaskClick(taskElement, isCompletedVar, setCompletedVar, originalText) {
+            if (isCompletedVar()) {
+                event.preventDefault(); // Prevent default if already completed
+            } else {
+                taskElement.classList.add('loading'); // Add loading class
+                taskElement.querySelector('.button-text').textContent = "Memverifikasi..."; // Change text to verifying
+                taskElement.querySelector('.checkmark').style.display = 'none'; // Hide checkmark
+                taskElement.querySelector('.spinner').style.display = 'inline-block'; // Show spinner
+
+                // Temporarily set progress text to "Sedang Verifikasi..."
+                progressText.textContent = "Sedang Verifikasi...";
+
+                setTimeout(() => {
+                    setCompletedVar(true); // Update completion status
+                    updateUI(); // Re-render UI
+                }, 3100);
             }
         }
 
         // Event Listeners for tasks
         whatsappTask.addEventListener('click', (event) => {
-            if (isWhatsappCompleted) {
-                event.preventDefault();
-            } else {
-                setTimeout(() => {
-                    isWhatsappCompleted = true;
-                    updateUI();
-                }, 3100); // Jeda 3.1 detik
-            }
+            handleTaskClick(whatsappTask, () => isWhatsappCompleted, (val) => { isWhatsappCompleted = val; }, WA_BUTTON_TEXT);
         });
 
         youtubeTask.addEventListener('click', (event) => {
-            if (isYoutubeCompleted) {
-                event.preventDefault();
-            } else {
-                setTimeout(() => {
-                    isYoutubeCompleted = true;
-                    updateUI();
-                }, 3100); // Jeda 3.1 detik
-            }
+            handleTaskClick(youtubeTask, () => isYoutubeCompleted, (val) => { isYoutubeCompleted = val; }, YOUTUBE_BUTTON_TEXT);
+        });
+
+        robloxTask.addEventListener('click', (event) => {
+            handleTaskClick(robloxTask, () => isRobloxCompleted, (val) => { isRobloxCompleted = val; }, ROBLOX_BUTTON_TEXT);
         });
 
         openLinkButton.addEventListener('click', () => {

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alat Pembuat URL Link Unlocker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Subtle gradient background */
+            background: linear-gradient(135deg, #e0f2f7 0%, #c8e6c9 100%); /* Soft blue-green gradient */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1.5rem;
+            box-sizing: border-box;
+            color: #334155; /* Default text color */
+        }
+
+        /* Main container card */
+        .container {
+            background-color: #ffffff; /* Clean white background for the card */
+            border-radius: 2rem; /* Even more rounded corners */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 15px rgba(0, 0, 0, 0.05); /* Deeper, layered, soft shadow */
+            padding: 3rem; /* Generous padding */
+            max-width: 700px; /* Slightly wider */
+            width: 100%;
+            text-align: center;
+            border: 1px solid #e2e8f0; /* Subtle light border */
+            animation: fadeInScale 0.8s ease-out; /* Gentle animation on load */
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Headings */
+        h1 {
+            font-size: 2.5rem; /* Larger title */
+            font-weight: 800; /* Extra bold */
+            color: #1a202c; /* Very dark gray */
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        p {
+            font-size: 1.125rem; /* Larger description text */
+            color: #4a5568; /* Muted dark gray */
+            margin-bottom: 2.5rem;
+        }
+
+        /* Input group styling */
+        .input-group {
+            margin-bottom: 1.75rem; /* More space between groups */
+            text-align: left;
+            position: relative; /* For error message positioning */
+        }
+        .input-group label {
+            display: block;
+            font-weight: 700; /* Bolder labels */
+            color: #2d3748; /* Darker text for labels */
+            margin-bottom: 0.75rem; /* Space between label and input */
+            font-size: 1.05rem;
+        }
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 1rem 1.25rem; /* Increased padding for better feel */
+            border: 2px solid #cbd5e1; /* Slightly thicker border */
+            border-radius: 0.75rem; /* Rounded input fields */
+            font-size: 1.05rem;
+            color: #2d3748; /* Dark text */
+            background-color: #f8fafc; /* Very light background */
+            transition: all 0.3s ease-in-out;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Subtle inner shadow */
+        }
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #6366f1; /* Vibrant focus color */
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3); /* More prominent focus ring */
+            background-color: #ffffff; /* White background on focus */
+        }
+        .input-group textarea {
+            min-height: 120px; /* Taller textarea */
+            resize: vertical; /* Allow vertical resizing */
+            font-family: 'Roboto Mono', monospace; /* Monospace for URL input */
+        }
+        .input-group input#displayText {
+            font-family: 'Inter', sans-serif; /* Keep Inter for display text */
+        }
+
+        /* Error message styling */
+        .error-message {
+            color: #ef4444; /* Red color */
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            text-align: left;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: opacity 0.3s ease-out, height 0.3s ease-out;
+        }
+        .error-message.show {
+            opacity: 1;
+            height: auto; /* Allow height to expand */
+        }
+
+        /* Button styling */
+        .btn {
+            padding: 1rem 2.5rem; /* Generous padding */
+            border-radius: 1rem; /* Very rounded buttons */
+            font-weight: 800; /* Extra bold */
+            font-size: 1.15rem; /* Slightly larger font */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12); /* Prominent shadow */
+            display: inline-flex; /* For centering content if needed */
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem; /* Space for icons */
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #4f46e5, #7c3aed); /* Vibrant gradient */
+            color: white;
+            border: none;
+        }
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(45deg, #4338ca, #6d28d9); /* Darker gradient on hover */
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .btn-primary:disabled {
+            background-color: #cbd5e1; /* Lighter gray when disabled */
+            color: #94a3b8; /* Muted text */
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        .btn-secondary {
+            background-color: #e2e8f0; /* Light gray */
+            color: #4a5568; /* Darker text */
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+        .btn-secondary:hover {
+            background-color: #d1d9e0; /* Slightly darker gray on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Output section styling */
+        .output-group {
+            margin-top: 3rem; /* More space above output */
+            text-align: center; /* Center content within the output group */
+        }
+
+        /* Styled header for output URL */
+        .output-header {
+            background: linear-gradient(45deg, #20c997, #17a2b8); /* Green-blue gradient for header */
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem; /* Rounded corners */
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-block; /* To apply padding and border-radius correctly */
+            margin-bottom: 1.5rem; /* Space below header */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Actual URL display box */
+        #generatedUrlDisplay {
+            background-color: #f0f4f8; /* Light blue-gray background for output box */
+            border-radius: 1rem;
+            border: 1px solid #dbeafe; /* Soft blue border */
+            box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.05); /* Subtle inner shadow */
+            padding: 1.5rem; /* Generous padding inside the URL box */
+            font-family: 'Roboto Mono', monospace; /* Monospace font for URL */
+            font-size: 1.1rem; /* Larger font size for readability */
+            color: #2d3748; /* Dark text */
+            word-break: break-all; /* Ensure long URLs wrap naturally */
+            text-align: center; /* Center the URL text */
+            margin: 0 auto; /* Center the block itself */
+            max-width: 100%; /* Ensure it doesn't overflow */
+            overflow-x: auto; /* Allow horizontal scrolling if URL is extremely long */
+            white-space: pre-wrap; /* Preserve whitespace and wrap */
+        }
+
+        .copy-message {
+            margin-top: 1rem;
+            color: #2f855a; /* Green for success message */
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.4s ease-out;
+            font-size: 0.95rem;
+        }
+        .copy-message.show {
+            opacity: 1;
+        }
+        .flex-buttons {
+            display: flex;
+            gap: 1.25rem; /* Space between buttons */
+            margin-top: 1.5rem;
+            justify-content: center; /* Center buttons */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem;
+            }
+            .container {
+                padding: 2rem;
+                border-radius: 1.5rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            p {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+            .input-group {
+                margin-bottom: 1.25rem;
+            }
+            .input-group label {
+                font-size: 0.95rem;
+                margin-bottom: 0.5rem;
+            }
+            .input-group input,
+            .input-group textarea,
+            .input-group select {
+                padding: 0.8rem 1rem;
+                font-size: 0.95rem;
+            }
+            .input-group textarea {
+                min-height: 100px;
+            }
+            .btn {
+                padding: 0.8rem 1.8rem;
+                font-size: 1rem;
+            }
+            .flex-buttons {
+                flex-direction: column; /* Stack buttons vertically on small screens */
+                gap: 0.75rem;
+            }
+            .output-group {
+                margin-top: 2rem;
+            }
+            .output-header {
+                font-size: 1rem;
+                padding: 0.6rem 1rem;
+            }
+            #generatedUrlDisplay {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+            .copy-message {
+                margin-top: 0.75rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Alat Pembuat URL Link Unlocker</h1>
+        <p class="text-gray-600 mb-8">
+            Masukkan tautan target dan teks yang ingin ditampilkan, lalu klik 'Generate' untuk mendapatkan URL siap pakai.
+        </p>
+
+        <div class="input-group">
+            <label for="targetText">Teks untuk diubah (URL Target):</label>
+            <textarea id="targetText" placeholder="Contoh: https://linkanda.com/file-rahasia"></textarea>
+            <p id="urlError" class="error-message">Mohon masukkan URL yang valid (misalnya, dimulai dengan http:// atau https://).</p>
+        </div>
+
+        <div class="input-group">
+            <label for="displayText">Teks yang akan ditampilkan (untuk tombol):</label>
+            <input type="text" id="displayText" placeholder="Contoh: script shiftlock">
+            <p id="textError" class="error-message">Teks tampilan tidak boleh kosong.</p>
+        </div>
+
+        <div class="input-group">
+            <label for="taskCount">Jumlah Tugas yang Diberikan:</label>
+            <select id="taskCount">
+                <option value="2">2 Tugas (WhatsApp & YouTube)</option>
+                <option value="1">1 Tugas (Hanya WhatsApp)</option>
+                <option value="0">Tidak Ada Tugas</option>
+            </select>
+        </div>
+
+        <div id="whatsappTaskInputGroup" class="input-group">
+            <label for="whatsappTaskLink">Link Tugas WhatsApp:</label>
+            <input type="text" id="whatsappTaskLink" placeholder="Contoh: https://whatsapp.com/channel/0029VacommHBfxo8V9QWSx2O">
+            <p id="whatsappLinkError" class="error-message">Mohon masukkan URL WhatsApp yang valid.</p>
+        </div>
+
+        <div id="youtubeTaskInputGroup" class="input-group">
+            <label for="youtubeTaskLink">Link Tugas YouTube:</label>
+            <input type="text" id="youtubeTaskLink" placeholder="Contoh: https://www.youtube.com/@Hanzerotes">
+            <p id="youtubeLinkError" class="error-message">Mohon masukkan URL YouTube yang valid.</p>
+        </div>
+        <button id="generateBtn" class="btn btn-primary w-full">
+            <i class="fas fa-magic"></i> Generate URL
+        </button>
+
+        <div class="output-group hidden" id="outputSection">
+            <div class="output-header">URL Hasil</div>
+            <div id="generatedUrlDisplay"></div>
+            <div class="flex-buttons">
+                <button id="copyBtn" class="btn btn-secondary flex-1">
+                    <i class="fas fa-copy"></i> Salin URL
+                </button>
+            </div>
+            <p id="copyMessage" class="copy-message">URL berhasil disalin!</p>
+        </div>
+    </div>
+
+    <script>
+        // Mendapatkan referensi elemen DOM
+        const targetTextInput = document.getElementById('targetText');
+        const displayTextInput = document.getElementById('displayText');
+        const generateButton = document.getElementById('generateBtn');
+        const outputSection = document.getElementById('outputSection');
+        const generatedUrlDisplay = document.getElementById('generatedUrlDisplay');
+        const copyButton = document.getElementById('copyBtn');
+        const copyMessage = document.getElementById('copyMessage');
+        const urlError = document.getElementById('urlError');
+        const textError = document.getElementById('textError');
+
+        // Elemen pengaturan tugas baru
+        const taskCountSelect = document.getElementById('taskCount');
+        const whatsappTaskInputGroup = document.getElementById('whatsappTaskInputGroup');
+        const whatsappTaskLinkInput = document.getElementById('whatsappTaskLink');
+        const whatsappLinkError = document.getElementById('whatsappLinkError');
+        const youtubeTaskInputGroup = document.getElementById('youtubeTaskInputGroup');
+        const youtubeTaskLinkInput = document.getElementById('youtubeTaskLink');
+        const youtubeLinkError = document.getElementById('youtubeLinkError');
+
+        // URL dasar untuk aplikasi Task Link Unlocker
+        const BASE_URL = "https://roihanmuslimin.github.io/TaskLinkUnlocker123/";
+
+        /**
+         * Memvalidasi apakah string adalah format URL yang valid.
+         * @param {string} urlString - String yang akan divalidasi.
+         * @returns {boolean} True jika URL valid, false jika tidak.
+         */
+        function isValidUrl(urlString) {
+            try {
+                const url = new URL(urlString);
+                return url.protocol === "http:" || url.protocol === "https:";
+            } catch (e) {
+                return false;
+            }
+        }
+
+        /**
+         * Meng-encode string ke format Base64.
+         * @param {string} str - String yang akan di-encode.
+         * @returns {string} String yang sudah di-encode Base64.
+         */
+        function encodeToBase64(str) {
+            try {
+                return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+                    function toSolidBytes(match, p1) {
+                        return String.fromCharCode('0x' + p1);
+                    }));
+            } catch (e) {
+                console.error("Error encoding to Base64:", e);
+                return "";
+            }
+        }
+
+        /**
+         * Mengganti spasi dengan tanda '+' dalam string.
+         * @param {string} str - String yang akan diproses.
+         * @returns {string} String dengan spasi diganti '+'.
+         */
+        function replaceSpacesWithPlus(str) {
+            return str.replace(/ /g, '+');
+        }
+
+        /**
+         * Memperbarui visibilitas kolom input tugas berdasarkan pilihan jumlah tugas.
+         */
+        function updateTaskInputVisibility() {
+            const selectedTaskCount = taskCountSelect.value;
+
+            whatsappTaskInputGroup.classList.add('hidden');
+            youtubeTaskInputGroup.classList.add('hidden');
+            whatsappLinkError.classList.remove('show');
+            youtubeLinkError.classList.remove('show');
+
+            if (selectedTaskCount === '1') {
+                whatsappTaskInputGroup.classList.remove('hidden');
+            } else if (selectedTaskCount === '2') {
+                whatsappTaskInputGroup.classList.remove('hidden');
+                youtubeTaskInputGroup.classList.remove('hidden');
+            }
+            updateGenerateButtonStatus(); // Perbarui status tombol generate setelah visibilitas berubah
+        }
+
+        /**
+         * Memperbarui status tombol generate berdasarkan validasi input.
+         */
+        function updateGenerateButtonStatus() {
+            const isTargetTextValid = isValidUrl(targetTextInput.value.trim());
+            const isDisplayTextFilled = displayTextInput.value.trim() !== "";
+            const selectedTaskCount = taskCountSelect.value;
+
+            let areTaskLinksValid = true;
+
+            // Validasi link tugas berdasarkan jumlah tugas yang dipilih
+            if (selectedTaskCount === '1' || selectedTaskCount === '2') {
+                const whatsappLink = whatsappTaskLinkInput.value.trim();
+                if (!isValidUrl(whatsappLink)) {
+                    whatsappLinkError.classList.add('show');
+                    areTaskLinksValid = false;
+                } else {
+                    whatsappLinkError.classList.remove('show');
+                }
+            } else {
+                whatsappLinkError.classList.remove('show'); // Sembunyikan jika tidak relevan
+            }
+
+            if (selectedTaskCount === '2') {
+                const youtubeLink = youtubeTaskLinkInput.value.trim();
+                if (!isValidUrl(youtubeLink)) {
+                    youtubeLinkError.classList.add('show');
+                    areTaskLinksValid = false;
+                } else {
+                    youtubeLinkError.classList.remove('show');
+                }
+            } else {
+                youtubeLinkError.classList.remove('show'); // Sembunyikan jika tidak relevan
+            }
+
+            // Tampilkan/sembunyikan error untuk URL Target dan Teks Tampilan
+            if (targetTextInput.value.trim() !== "" && !isTargetTextValid) {
+                urlError.classList.add('show');
+            } else {
+                urlError.classList.remove('show');
+            }
+
+            if (displayTextInput.value.trim() === "") {
+                textError.classList.add('show');
+            } else {
+                textError.classList.remove('show');
+            }
+
+            // Aktifkan tombol generate hanya jika semua input yang relevan valid
+            generateButton.disabled = !(isTargetTextValid && isDisplayTextFilled && areTaskLinksValid);
+        }
+
+        // Event listener untuk input real-time pada kolom URL Target
+        targetTextInput.addEventListener('input', updateGenerateButtonStatus);
+
+        // Event listener untuk input real-time pada kolom Teks yang akan ditampilkan
+        displayTextInput.addEventListener('input', updateGenerateButtonStatus);
+
+        // Event listener untuk perubahan pilihan jumlah tugas
+        taskCountSelect.addEventListener('change', updateTaskInputVisibility);
+
+        // Event listener untuk input real-time pada kolom Link Tugas WhatsApp
+        whatsappTaskLinkInput.addEventListener('input', updateGenerateButtonStatus);
+
+        // Event listener untuk input real-time pada kolom Link Tugas YouTube
+        youtubeTaskLinkInput.addEventListener('input', updateGenerateButtonStatus);
+
+
+        // Event listener untuk tombol "Generate URL"
+        generateButton.addEventListener('click', () => {
+            const targetText = targetTextInput.value.trim();
+            let displayText = displayTextInput.value.trim();
+            const selectedTaskCount = taskCountSelect.value;
+
+            // Lakukan validasi akhir sebelum generate
+            if (targetText === "" || !isValidUrl(targetText)) {
+                urlError.classList.add('show');
+                alert("Mohon masukkan URL target yang valid.");
+                return;
+            }
+            if (displayText === "") {
+                textError.classList.add('show');
+                alert("Mohon masukkan teks yang akan ditampilkan.");
+                return;
+            }
+
+            let whatsappLink = "";
+            let youtubeLink = "";
+
+            if (selectedTaskCount === '1' || selectedTaskCount === '2') {
+                whatsappLink = whatsappTaskLinkInput.value.trim();
+                if (!isValidUrl(whatsappLink)) {
+                    whatsappLinkError.classList.add('show');
+                    alert("Mohon masukkan URL WhatsApp yang valid.");
+                    return;
+                }
+            }
+            if (selectedTaskCount === '2') {
+                youtubeLink = youtubeTaskLinkInput.value.trim();
+                if (!isValidUrl(youtubeLink)) {
+                    youtubeLinkError.classList.add('show');
+                    alert("Mohon masukkan URL YouTube yang valid.");
+                    return;
+                }
+            }
+
+            // Encode URL target ke Base64
+            const encodedTarget = encodeToBase64(targetText);
+
+            // Ganti spasi di teks tampilan dengan '+'
+            const formattedDisplayText = replaceSpacesWithPlus(displayText);
+
+            // Buat URL akhir
+            let finalUrl = `${BASE_URL}?target=${encodedTarget}&disphanzer=${formattedDisplayText}`;
+
+            // Tambahkan parameter tugas berdasarkan pilihan
+            finalUrl += `&tasks=${selectedTaskCount}`;
+            if (selectedTaskCount === '1' || selectedTaskCount === '2') {
+                finalUrl += `&whatsappLink=${encodeToBase64(whatsappLink)}`;
+            }
+            if (selectedTaskCount === '2') {
+                finalUrl += `&youtubeLink=${encodeToBase64(youtubeLink)}`;
+            }
+
+            // Tampilkan hasil dan tampilkan bagian output
+            generatedUrlDisplay.textContent = finalUrl;
+            outputSection.classList.remove('hidden');
+            copyMessage.classList.remove('show');
+
+            // Gulir ke bagian output untuk visibilitas yang lebih baik di perangkat kecil
+            outputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // Event listener untuk tombol "Salin URL"
+        copyButton.addEventListener('click', () => {
+            const urlToCopy = generatedUrlDisplay.textContent;
+
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = urlToCopy;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            tempTextArea.setSelectionRange(0, 99999);
+
+            try {
+                document.execCommand('copy');
+                copyMessage.classList.add('show');
+                setTimeout(() => {
+                    copyMessage.classList.remove('show');
+                }, 2000);
+            } catch (err) {
+                console.error('Gagal menyalin URL:', err);
+                alert("Gagal menyalin URL. Silakan salin secara manual: " + urlToCopy);
+            } finally {
+                document.body.removeChild(tempTextArea);
+            }
+        });
+
+        // Inisialisasi status tombol dan visibilitas input saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTaskInputVisibility(); // Atur visibilitas awal
+            updateGenerateButtonStatus(); // Atur status tombol awal
+        });
+    </script>
+</body>
+</html>
+
