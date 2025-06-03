@@ -212,60 +212,93 @@
             justify-content: center; /* Center buttons */
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 640px) {
-            body {
-                padding: 1rem;
+        /* History section styling */
+        .history-group {
+            margin-top: 3rem;
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #f7f9fb; /* Very light gray */
+            border-radius: 1.5rem;
+            border: 1px solid #e0e7ee;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        .history-header {
+            background: linear-gradient(45deg, #60a5fa, #3b82f6); /* Blue gradient for history header */
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 1rem;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .history-item {
+            display: flex;
+            flex-direction: column; /* Default to column on small screens */
+            align-items: flex-start; /* Align items to start */
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem; /* Space between items */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease-in-out;
+        }
+        .history-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+        .history-url-text {
+            flex-grow: 1;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+            color: #334155;
+            text-align: left;
+            word-break: break-all;
+            margin-bottom: 0.5rem; /* Space below URL text */
+            width: 100%; /* Take full width */
+        }
+        .history-item-actions {
+            display: flex;
+            gap: 0.5rem;
+            width: 100%; /* Take full width */
+            justify-content: flex-end; /* Align buttons to the right */
+        }
+        .history-item-btn {
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+        .history-item-btn.copy {
+            background-color: #a78bfa; /* Purple for copy */
+            color: white;
+        }
+        .history-item-btn.copy:hover {
+            background-color: #8b5cf6;
+        }
+        /* Removed .history-item-btn.delete styles */
+
+        /* Responsive adjustments for history */
+        @media (min-width: 641px) { /* Apply flex for larger screens */
+            .history-item {
+                flex-direction: row; /* Horizontal layout */
+                align-items: center;
+                justify-content: space-between;
             }
-            .container {
-                padding: 2rem;
-                border-radius: 1.5rem;
+            .history-url-text {
+                margin-bottom: 0;
+                margin-right: 1rem; /* Space before buttons */
             }
-            h1 {
-                font-size: 2rem;
-            }
-            p {
-                font-size: 1rem;
-                margin-bottom: 2rem;
-            }
-            .input-group {
-                margin-bottom: 1.25rem;
-            }
-            .input-group label {
-                font-size: 0.95rem;
-                margin-bottom: 0.5rem;
-            }
-            .input-group input,
-            .input-group textarea,
-            .input-group select {
-                padding: 0.8rem 1rem;
-                font-size: 0.95rem;
-            }
-            .input-group textarea {
-                min-height: 100px;
-            }
-            .btn {
-                padding: 0.8rem 1.8rem;
-                font-size: 1rem;
-            }
-            .flex-buttons {
-                flex-direction: column; /* Stack buttons vertically on small screens */
-                gap: 0.75rem;
-            }
-            .output-group {
-                margin-top: 2rem;
-            }
-            .output-header {
-                font-size: 1rem;
-                padding: 0.6rem 1rem;
-            }
-            #generatedUrlDisplay {
-                padding: 1rem;
-                font-size: 1rem;
-            }
-            .copy-message {
-                margin-top: 0.75rem;
-                font-size: 0.85rem;
+            .history-item-actions {
+                width: auto; /* Auto width for buttons */
             }
         }
     </style>
@@ -289,26 +322,6 @@
             <p id="textError" class="error-message">Teks tampilan tidak boleh kosong.</p>
         </div>
 
-        <div class="input-group">
-            <label for="taskCount">Jumlah Tugas yang Diberikan:</label>
-            <select id="taskCount">
-                <option value="2">2 Tugas (WhatsApp & YouTube)</option>
-                <option value="1">1 Tugas (Hanya WhatsApp)</option>
-                <option value="0">Tidak Ada Tugas</option>
-            </select>
-        </div>
-
-        <div id="whatsappTaskInputGroup" class="input-group">
-            <label for="whatsappTaskLink">Link Tugas WhatsApp:</label>
-            <input type="text" id="whatsappTaskLink" placeholder="Contoh: https://whatsapp.com/channel/0029VacommHBfxo8V9QWSx2O">
-            <p id="whatsappLinkError" class="error-message">Mohon masukkan URL WhatsApp yang valid.</p>
-        </div>
-
-        <div id="youtubeTaskInputGroup" class="input-group">
-            <label for="youtubeTaskLink">Link Tugas YouTube:</label>
-            <input type="text" id="youtubeTaskLink" placeholder="Contoh: https://www.youtube.com/@Hanzerotes">
-            <p id="youtubeLinkError" class="error-message">Mohon masukkan URL YouTube yang valid.</p>
-        </div>
         <button id="generateBtn" class="btn btn-primary w-full">
             <i class="fas fa-magic"></i> Generate URL
         </button>
@@ -323,7 +336,16 @@
             </div>
             <p id="copyMessage" class="copy-message">URL berhasil disalin!</p>
         </div>
-    </div>
+
+        <div class="history-group hidden" id="historySection">
+            <div class="history-header">Riwayat URL</div>
+            <div id="historyList" class="space-y-3">
+                </div>
+            <button id="clearHistoryBtn" class="btn btn-secondary w-full mt-4">
+                <i class="fas fa-trash-alt"></i> Hapus Semua Riwayat
+            </button>
+        </div>
+        </div>
 
     <script>
         // Mendapatkan referensi elemen DOM
@@ -337,17 +359,15 @@
         const urlError = document.getElementById('urlError');
         const textError = document.getElementById('textError');
 
-        // Elemen pengaturan tugas baru
-        const taskCountSelect = document.getElementById('taskCount');
-        const whatsappTaskInputGroup = document.getElementById('whatsappTaskInputGroup');
-        const whatsappTaskLinkInput = document.getElementById('whatsappTaskLink');
-        const whatsappLinkError = document.getElementById('whatsappLinkError');
-        const youtubeTaskInputGroup = document.getElementById('youtubeTaskInputGroup');
-        const youtubeTaskLinkInput = document.getElementById('youtubeTaskLink');
-        const youtubeLinkError = document.getElementById('youtubeLinkError');
+        // Elemen Riwayat Baru
+        const historySection = document.getElementById('historySection');
+        const historyList = document.getElementById('historyList');
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
 
         // URL dasar untuk aplikasi Task Link Unlocker
         const BASE_URL = "https://roihanmuslimin.github.io/TaskLinkUnlocker123/";
+        const HISTORY_STORAGE_KEY = 'urlUnlockerHistory';
+        const MAX_HISTORY_ITEMS = 5; // Batasi riwayat hingga 5 item
 
         /**
          * Memvalidasi apakah string adalah format URL yang valid.
@@ -390,102 +410,209 @@
         }
 
         /**
-         * Memperbarui visibilitas kolom input tugas berdasarkan pilihan jumlah tugas.
-         */
-        function updateTaskInputVisibility() {
-            const selectedTaskCount = taskCountSelect.value;
-
-            whatsappTaskInputGroup.classList.add('hidden');
-            youtubeTaskInputGroup.classList.add('hidden');
-            whatsappLinkError.classList.remove('show');
-            youtubeLinkError.classList.remove('show');
-
-            if (selectedTaskCount === '1') {
-                whatsappTaskInputGroup.classList.remove('hidden');
-            } else if (selectedTaskCount === '2') {
-                whatsappTaskInputGroup.classList.remove('hidden');
-                youtubeTaskInputGroup.classList.remove('hidden');
-            }
-            updateGenerateButtonStatus(); // Perbarui status tombol generate setelah visibilitas berubah
-        }
-
-        /**
          * Memperbarui status tombol generate berdasarkan validasi input.
          */
         function updateGenerateButtonStatus() {
             const isTargetTextValid = isValidUrl(targetTextInput.value.trim());
             const isDisplayTextFilled = displayTextInput.value.trim() !== "";
-            const selectedTaskCount = taskCountSelect.value;
 
-            let areTaskLinksValid = true;
-
-            // Validasi link tugas berdasarkan jumlah tugas yang dipilih
-            if (selectedTaskCount === '1' || selectedTaskCount === '2') {
-                const whatsappLink = whatsappTaskLinkInput.value.trim();
-                if (!isValidUrl(whatsappLink)) {
-                    whatsappLinkError.classList.add('show');
-                    areTaskLinksValid = false;
-                } else {
-                    whatsappLinkError.classList.remove('show');
-                }
-            } else {
-                whatsappLinkError.classList.remove('show'); // Sembunyikan jika tidak relevan
-            }
-
-            if (selectedTaskCount === '2') {
-                const youtubeLink = youtubeTaskLinkInput.value.trim();
-                if (!isValidUrl(youtubeLink)) {
-                    youtubeLinkError.classList.add('show');
-                    areTaskLinksValid = false;
-                } else {
-                    youtubeLinkError.classList.remove('show');
-                }
-            } else {
-                youtubeLinkError.classList.remove('show'); // Sembunyikan jika tidak relevan
-            }
-
-            // Tampilkan/sembunyikan error untuk URL Target dan Teks Tampilan
+            // Tampilkan/sembunyikan error untuk URL Target
             if (targetTextInput.value.trim() !== "" && !isTargetTextValid) {
                 urlError.classList.add('show');
             } else {
                 urlError.classList.remove('show');
             }
 
+            // Tampilkan/sembunyikan error untuk Teks Tampilan
             if (displayTextInput.value.trim() === "") {
                 textError.classList.add('show');
             } else {
                 textError.classList.remove('show');
             }
 
-            // Aktifkan tombol generate hanya jika semua input yang relevan valid
-            generateButton.disabled = !(isTargetTextValid && isDisplayTextFilled && areTaskLinksValid);
+            // Aktifkan tombol generate hanya jika kedua input valid
+            generateButton.disabled = !(isTargetTextValid && isDisplayTextFilled);
         }
 
-        // Event listener untuk input real-time pada kolom URL Target
-        targetTextInput.addEventListener('input', updateGenerateButtonStatus);
+        /**
+         * Menyimpan URL yang dihasilkan ke riwayat di localStorage.
+         * @param {string} url - URL lengkap yang dihasilkan.
+         * @param {string} originalTargetText - Teks URL target asli.
+         * @param {string} originalDisplayText - Teks tampilan asli.
+         */
+        function saveUrlToHistory(url, originalTargetText, originalDisplayText) {
+            let history = JSON.parse(localStorage.getItem(HISTORY_STORAGE_KEY) || '[]');
 
-        // Event listener untuk input real-time pada kolom Teks yang akan ditampilkan
-        displayTextInput.addEventListener('input', updateGenerateButtonStatus);
+            // Buat objek riwayat baru
+            const newItem = {
+                url: url,
+                target: originalTargetText,
+                display: originalDisplayText,
+                timestamp: new Date().toISOString()
+            };
 
-        // Event listener untuk perubahan pilihan jumlah tugas
-        taskCountSelect.addEventListener('change', updateTaskInputVisibility);
+            // Tambahkan item baru ke awal array
+            history.unshift(newItem);
 
-        // Event listener untuk input real-time pada kolom Link Tugas WhatsApp
-        whatsappTaskLinkInput.addEventListener('input', updateGenerateButtonStatus);
+            // Batasi jumlah item riwayat
+            if (history.length > MAX_HISTORY_ITEMS) {
+                history = history.slice(0, MAX_HISTORY_ITEMS);
+            }
 
-        // Event listener untuk input real-time pada kolom Link Tugas YouTube
-        youtubeTaskLinkInput.addEventListener('input', updateGenerateButtonStatus);
+            localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
+            renderHistory(); // Render ulang riwayat setelah menyimpan
+        }
+
+        /**
+         * Memuat riwayat dari localStorage.
+         * @returns {Array} Array objek riwayat.
+         */
+        function loadHistory() {
+            return JSON.parse(localStorage.getItem(HISTORY_STORAGE_KEY) || '[]');
+        }
+
+        /**
+         * Merender ulang daftar riwayat di UI.
+         */
+        function renderHistory() {
+            const history = loadHistory();
+            historyList.innerHTML = ''; // Bersihkan daftar yang ada
+
+            if (history.length === 0) {
+                historySection.classList.add('hidden');
+                return;
+            } else {
+                historySection.classList.remove('hidden');
+            }
+
+            history.forEach((item) => { // Hapus 'index' karena tidak lagi diperlukan untuk tombol hapus individual
+                const historyItemDiv = document.createElement('div');
+                historyItemDiv.classList.add('history-item');
+
+                const urlTextDiv = document.createElement('div');
+                urlTextDiv.classList.add('history-url-text');
+                urlTextDiv.textContent = item.url;
+                historyItemDiv.appendChild(urlTextDiv);
+
+                const actionsDiv = document.createElement('div');
+                actionsDiv.classList.add('history-item-actions');
+
+                // Tombol "Salin" untuk item riwayat
+                const copyItemBtn = document.createElement('button');
+                copyItemBtn.classList.add('history-item-btn', 'copy');
+                copyItemBtn.innerHTML = '<i class="fas fa-copy"></i> Salin';
+                copyItemBtn.title = 'Salin URL ini dan isi form';
+                copyItemBtn.addEventListener('click', () => {
+                    // Isi kembali input form
+                    targetTextInput.value = item.target;
+                    displayTextInput.value = item.display;
+                    generatedUrlDisplay.textContent = item.url; // Tampilkan juga di output utama
+                    outputSection.classList.remove('hidden'); // Pastikan output section terlihat
+                    copyMessage.classList.remove('show'); // Sembunyikan pesan salin
+                    updateGenerateButtonStatus(); // Perbarui status tombol generate
+                    // Gulir ke atas ke form input
+                    targetTextInput.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+                actionsDiv.appendChild(copyItemBtn);
+
+                // Tombol "Hapus" individual telah dihapus dari sini
+
+                historyItemDiv.appendChild(actionsDiv);
+                historyList.appendChild(historyItemDiv);
+            });
+        }
+
+        // Fungsi deleteHistoryItem() individual telah dihapus
+
+        /**
+         * Menghapus semua item dari riwayat.
+         */
+        function clearAllHistory() {
+            // Menggunakan konfirmasi kustom yang lebih baik daripada alert/confirm
+            showCustomConfirmation("Apakah Anda yakin ingin menghapus semua riwayat?", () => {
+                localStorage.removeItem(HISTORY_STORAGE_KEY);
+                renderHistory(); // Render ulang riwayat (akan menyembunyikan bagian riwayat)
+            });
+        }
+
+        /**
+         * Menampilkan dialog konfirmasi kustom.
+         * @param {string} message - Pesan yang akan ditampilkan.
+         * @param {function} onConfirm - Callback jika pengguna mengkonfirmasi.
+         */
+        function showCustomConfirmation(message, onConfirm) {
+            // Buat elemen modal
+            const modalOverlay = document.createElement('div');
+            modalOverlay.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background-color: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;
+                z-index: 1000;
+            `;
+
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background-color: white; padding: 2rem; border-radius: 1rem;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; max-width: 400px;
+                font-family: 'Inter', sans-serif;
+            `;
+
+            const messagePara = document.createElement('p');
+            messagePara.textContent = message;
+            messagePara.style.cssText = `
+                margin-bottom: 1.5rem; font-size: 1.1rem; color: #334155;
+            `;
+
+            const buttonContainer = document.createElement('div');
+            buttonContainer.style.cssText = `
+                display: flex; justify-content: center; gap: 1rem;
+            `;
+
+            const confirmBtn = document.createElement('button');
+            confirmBtn.textContent = 'Ya, Hapus';
+            confirmBtn.style.cssText = `
+                background-color: #ef4444; color: white; padding: 0.75rem 1.5rem;
+                border: none; border-radius: 0.75rem; cursor: pointer; font-weight: 600;
+                transition: background-color 0.2s ease;
+            `;
+            confirmBtn.onmouseover = () => confirmBtn.style.backgroundColor = '#dc2626';
+            confirmBtn.onmouseout = () => confirmBtn.style.backgroundColor = '#ef4444';
+            confirmBtn.onclick = () => {
+                document.body.removeChild(modalOverlay);
+                onConfirm();
+            };
+
+            const cancelBtn = document.createElement('button');
+            cancelBtn.textContent = 'Batal';
+            cancelBtn.style.cssText = `
+                background-color: #cbd5e1; color: #4a5568; padding: 0.75rem 1.5rem;
+                border: none; border-radius: 0.75rem; cursor: pointer; font-weight: 600;
+                transition: background-color 0.2s ease;
+            `;
+            cancelBtn.onmouseover = () => cancelBtn.style.backgroundColor = '#a0aec0';
+            cancelBtn.onmouseout = () => cancelBtn.style.backgroundColor = '#cbd5e1';
+            cancelBtn.onclick = () => {
+                document.body.removeChild(modalOverlay);
+            };
+
+            buttonContainer.appendChild(confirmBtn);
+            buttonContainer.appendChild(cancelBtn);
+            modalContent.appendChild(messagePara);
+            modalContent.appendChild(buttonContainer);
+            modalOverlay.appendChild(modalContent);
+            document.body.appendChild(modalOverlay);
+        }
 
 
         // Event listener untuk tombol "Generate URL"
         generateButton.addEventListener('click', () => {
             const targetText = targetTextInput.value.trim();
             let displayText = displayTextInput.value.trim();
-            const selectedTaskCount = taskCountSelect.value;
 
             // Lakukan validasi akhir sebelum generate
             if (targetText === "" || !isValidUrl(targetText)) {
                 urlError.classList.add('show');
+                // Mengganti alert() dengan konfirmasi kustom jika diperlukan di sini
+                // Untuk validasi input, alert() masih bisa diterima untuk feedback cepat
                 alert("Mohon masukkan URL target yang valid.");
                 return;
             }
@@ -495,26 +622,6 @@
                 return;
             }
 
-            let whatsappLink = "";
-            let youtubeLink = "";
-
-            if (selectedTaskCount === '1' || selectedTaskCount === '2') {
-                whatsappLink = whatsappTaskLinkInput.value.trim();
-                if (!isValidUrl(whatsappLink)) {
-                    whatsappLinkError.classList.add('show');
-                    alert("Mohon masukkan URL WhatsApp yang valid.");
-                    return;
-                }
-            }
-            if (selectedTaskCount === '2') {
-                youtubeLink = youtubeTaskLinkInput.value.trim();
-                if (!isValidUrl(youtubeLink)) {
-                    youtubeLinkError.classList.add('show');
-                    alert("Mohon masukkan URL YouTube yang valid.");
-                    return;
-                }
-            }
-
             // Encode URL target ke Base64
             const encodedTarget = encodeToBase64(targetText);
 
@@ -522,27 +629,21 @@
             const formattedDisplayText = replaceSpacesWithPlus(displayText);
 
             // Buat URL akhir
-            let finalUrl = `${BASE_URL}?target=${encodedTarget}&disphanzer=${formattedDisplayText}`;
-
-            // Tambahkan parameter tugas berdasarkan pilihan
-            finalUrl += `&tasks=${selectedTaskCount}`;
-            if (selectedTaskCount === '1' || selectedTaskCount === '2') {
-                finalUrl += `&whatsappLink=${encodeToBase64(whatsappLink)}`;
-            }
-            if (selectedTaskCount === '2') {
-                finalUrl += `&youtubeLink=${encodeToBase64(youtubeLink)}`;
-            }
+            const finalUrl = `${BASE_URL}?target=${encodedTarget}&disphanzer=${formattedDisplayText}`;
 
             // Tampilkan hasil dan tampilkan bagian output
             generatedUrlDisplay.textContent = finalUrl;
             outputSection.classList.remove('hidden');
             copyMessage.classList.remove('show');
 
+            // Simpan ke riwayat
+            saveUrlToHistory(finalUrl, targetText, displayText);
+
             // Gulir ke bagian output untuk visibilitas yang lebih baik di perangkat kecil
             outputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
-        // Event listener untuk tombol "Salin URL"
+        // Event listener untuk tombol "Salin URL" (di bagian output utama)
         copyButton.addEventListener('click', () => {
             const urlToCopy = generatedUrlDisplay.textContent;
 
@@ -566,10 +667,13 @@
             }
         });
 
-        // Inisialisasi status tombol dan visibilitas input saat halaman dimuat
+        // Event listener untuk tombol "Hapus Semua Riwayat"
+        clearHistoryBtn.addEventListener('click', clearAllHistory);
+
+        // Inisialisasi status tombol dan render riwayat saat halaman dimuat
         document.addEventListener('DOMContentLoaded', () => {
-            updateTaskInputVisibility(); // Atur visibilitas awal
-            updateGenerateButtonStatus(); // Atur status tombol awal
+            updateGenerateButtonStatus();
+            renderHistory(); // Render riwayat saat halaman dimuat
         });
     </script>
 </body>
