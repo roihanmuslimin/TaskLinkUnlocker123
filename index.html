@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="id" class="light"> <head>
+<html lang="id" class="light"> <!-- Default theme is light -->
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selesaikan Tugas untuk Membuka Tautan | Akses Eksklusif & Donasi</title>
@@ -7,10 +8,15 @@
     <meta name="keywords" content="tugas, tautan, buka link, robux, donasi, gamepass, whatsapp, youtube, akses eksklusif, github pages">
     <meta name="author" content="G">
 
+    <!-- Open Graph / Facebook / Twitter Meta Tags for Social Sharing -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://roihanmuslimin.github.io/TaskLinkUnlocker123/"> <meta property="og:title" content="Selesaikan Tugas untuk Membuka Tautan!">
+    <meta property="og:url" content="https://roihanmuslimin.github.io/TaskLinkUnlocker123/"> <!-- Ganti dengan URL GitHub Pages kamu yang sebenarnya -->
+    <meta property="og:title" content="Selesaikan Tugas untuk Membuka Tautan!">
     <meta property="og:description" content="Akses konten eksklusif dengan menyelesaikan tugas sederhana dan dukung saya dengan donasi Robux.">
-    <meta property="og:image" content="https://placehold.co/1200x630/e0ffe0/36454F?text=Selesaikan+Tugas+Buka+Tautan"> <script async src="https://www.googletagmanager.com/gtag/js?id=G-S57XREST5X"></script>
+    <meta property="og:image" content="https://placehold.co/1200x630/e0ffe0/36454F?text=Selesaikan+Tugas+Buka+Tautan"> <!-- Ganti dengan URL gambar thumbnail kamu -->
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S57XREST5X"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -18,9 +24,13 @@
 
       gtag('config', 'G-S57XREST5X'); // ID Pengukuran GA4 kamu
     </script>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter for modern look -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts - Roboto Mono for Name Input -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Dark Mode Toggle Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Custom styles for refined UI */
@@ -432,13 +442,13 @@
 
         /* Dark Mode Toggle Button */
         #darkModeToggle {
-            position: fixed; /* Changed to fixed */
+            position: fixed;
             top: 1.5rem;
             right: 1.5rem;
-            background-color: #e0e0e0; /* Light gray button */
+            background-color: #e0e0e0;
             color: #333;
             border: none;
-            border-radius: 9999px; /* Fully rounded */
+            border-radius: 9999px;
             padding: 0.75rem;
             cursor: pointer;
             font-size: 1.25rem;
@@ -447,15 +457,44 @@
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-            z-index: 10; /* Ensure it's above other elements */
+            z-index: 10;
         }
         #darkModeToggle:hover {
             transform: translateY(-1px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
         html.dark #darkModeToggle {
-            background-color: #5A626F; /* Darker gray button in dark mode */
-            color: #ecf0f1; /* Light icon in dark mode */
+            background-color: #5A626F;
+            color: #ecf0f1;
+        }
+
+        /* Language Toggle Button */
+        #languageToggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 5.5rem; /* Positioned next to dark mode toggle */
+            background-color: #e0e0e0;
+            color: #333;
+            border: none;
+            border-radius: 9999px;
+            padding: 0.75rem 1rem; /* Wider padding for text */
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            z-index: 10;
+        }
+        #languageToggle:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        html.dark #languageToggle {
+            background-color: #5A626F;
+            color: #ecf0f1;
         }
 
         /* Particles.js container */
@@ -511,6 +550,12 @@
                 padding: 0.6rem;
                 font-size: 1rem;
             }
+            #languageToggle {
+                top: 1rem;
+                right: 4.5rem; /* Adjust position for mobile */
+                padding: 0.6rem 0.8rem;
+                font-size: 0.9rem;
+            }
             .contact-title {
                 font-size: 1.5rem;
             }
@@ -525,30 +570,37 @@
     </style>
 </head>
 <body>
-    <div id="particles-js"></div> <button id="darkModeToggle" aria-label="Toggle dark mode">
-        <i class="fas fa-moon"></i> </button>
+    <div id="particles-js"></div> <!-- Particles.js container -->
+
+    <!-- Dark Mode Toggle Button -->
+    <button id="darkModeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i> <!-- Moon icon for dark mode -->
+    </button>
+
+    <!-- Language Toggle Button -->
+    <button id="languageToggle" aria-label="Toggle language" data-lang-key="language_toggle_text">EN</button>
 
     <div class="card-container">
-        <h1 class="title">Selesaikan Tugas untuk Membuka Tautan!</h1>
-        <p class="description">
+        <h1 class="title" data-lang-key="title">Selesaikan Tugas untuk Membuka Tautan!</h1>
+        <p class="description" data-lang-key="description">
             Selesaikan minimal **2** tugas di bawah ini untuk mendapatkan akses ke tautan eksklusif kamu.
         </p>
 
         <div class="space-y-4 mb-6">
             <a href="https://whatsapp.com/channel/0029VacommHBfxo8V9QWSx2O" target="_blank" id="whatsappTask" class="task-button whatsapp">
-                <span class="button-text">Ikuti Saluran WhatsApp</span>
+                <span class="button-text" data-lang-key="task_wa">Ikuti Saluran WhatsApp</span>
                 <i class="fas fa-spinner fa-spin spinner"></i>
                 <span class="checkmark">✓</span>
             </a>
 
             <a href="https://www.roblox.com/share?code=6359c56a5cfdde4eba2fea110af477da&type=Profile&source=ProfileShare&stamp=1748910192359" target="_blank" id="robloxTask" class="task-button roblox">
-                <span class="button-text">Follow Akun Roblox</span>
+                <span class="button-text" data-lang-key="task_roblox">Follow Akun Roblox</span>
                 <i class="fas fa-spinner fa-spin spinner"></i>
                 <span class="checkmark">✓</span>
             </a>
 
             <a href="https://www.youtube.com/@Hanzerotes" target="_blank" id="youtubeTask" class="task-button youtube">
-                <span class="button-text">Subscribe Saluran YouTube</span>
+                <span class="button-text" data-lang-key="task_yt">Subscribe Saluran YouTube</span>
                 <i class="fas fa-spinner fa-spin spinner"></i>
                 <span class="checkmark">✓</span>
             </a>
@@ -557,14 +609,15 @@
         <div class="progress-bar-container">
             <div id="progressBar" class="progress-bar"></div>
         </div>
-        <p id="progressText" class="progress-text">Selesaikan minimal 2 tugas untuk membuka tautan eksklusif</p>
+        <p id="progressText" class="progress-text" data-lang-key="progress_initial">Selesaikan minimal 2 tugas untuk membuka tautan eksklusif</p>
 
         <button id="openLinkButton" class="main-action-button" disabled>
-            Selesaikan tugas untuk membuka tautan
+            <span data-lang-key="main_button_disabled">Selesaikan tugas untuk membuka tautan</span>
         </button>
 
+        <!-- Donate Robux Section -->
         <div class="donate-section">
-            <h2 class="donate-title">Dukung Saya: Donate Robux!</h2>
+            <h2 class="donate-title" data-lang-key="donate_title">Dukung Saya: Donate Robux!</h2>
             <div class="donate-buttons-grid">
                 <a href="https://www.roblox.com/game-pass/952116430/Donate-5-Robux" target="_blank" class="donate-button">
                     5 Robux
@@ -580,26 +633,35 @@
                 </a>
             </div>
         </div>
+        <!-- End Donate Robux Section -->
+
+        <!-- Contact Form Section -->
         <div class="contact-section">
-            <h2 class="contact-title">Hubungi Saya</h2>
+            <h2 class="contact-title" data-lang-key="contact_title">Hubungi Saya</h2>
             <form action="https://formspree.io/f/movwqdao" method="POST" class="contact-form">
-                <label for="name">Nama Kamu:</label>
-                <input type="text" id="name" name="name" required placeholder="Masukkan nama kamu">
+                <label for="name" data-lang-key="form_name_label">Nama Kamu:</label>
+                <input type="text" id="name" name="name" required placeholder="Masukkan nama kamu" data-lang-key="form_name_placeholder_attr">
 
-                <label for="email">Email Kamu:</label>
-                <input type="email" id="email" name="_replyto" required placeholder="Masukkan email kamu">
+                <label for="email" data-lang-key="form_email_label">Email Kamu:</label>
+                <input type="email" id="email" name="_replyto" required placeholder="Masukkan email kamu" data-lang-key="form_email_placeholder_attr">
 
-                <label for="message">Pesan Kamu:</label>
-                <textarea id="message" name="message" rows="5" required placeholder="Tulis pesan kamu di sini..."></textarea>
+                <label for="message" data-lang-key="form_message_label">Pesan Kamu:</label>
+                <textarea id="message" name="message" rows="5" required placeholder="Tulis pesan kamu di sini..." data-lang-key="form_message_placeholder_attr"></textarea>
 
-                <button type="submit">Kirim Pesan</button>
+                <button type="submit" data-lang-key="form_submit">Kirim Pesan</button>
             </form>
         </div>
-        <p class="footer-text">
+        <!-- End Contact Form Section -->
+
+        <!-- Footer Text -->
+        <p class="footer-text" data-lang-key="footer_text">
             Dibuat dengan Suka Suka 😋<br>Terima kasih <span style="font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Segoe UI Symbol';">G</span>🐱
         </p>
-        </div>
+        <!-- End Footer Text -->
 
+    </div>
+
+    <!-- Particles.js Library -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
         // Function to get URL parameter and decode Base64
@@ -648,12 +710,17 @@
         // Get elements
         const htmlElement = document.documentElement;
         const darkModeToggle = document.getElementById('darkModeToggle');
+        const languageToggle = document.getElementById('languageToggle'); // New: Language toggle button
         const whatsappTask = document.getElementById('whatsappTask');
         const youtubeTask = document.getElementById('youtubeTask');
         const robloxTask = document.getElementById('robloxTask');
         const progressBar = document.getElementById('progressBar');
         const progressText = document.getElementById('progressText');
         const openLinkButton = document.getElementById('openLinkButton');
+        const formNameInput = document.getElementById('name');
+        const formEmailInput = document.getElementById('email');
+        const formMessageTextarea = document.getElementById('message');
+
 
         // Task completion status (ALWAYS reset on page load)
         let isWhatsappCompleted = false;
@@ -702,8 +769,98 @@
         });
         // --- End Dark Mode Logic ---
 
+        // --- Language Translation Logic ---
+        const langKey = 'language';
+        let currentLanguage = localStorage.getItem(langKey) || 'id'; // Default to Indonesian
+
+        const translations = {
+            'id': {
+                'title': 'Selesaikan Tugas untuk Membuka Tautan!',
+                'description': 'Selesaikan minimal **2** tugas di bawah ini untuk mendapatkan akses ke tautan eksklusif kamu.',
+                'task_wa': 'Ikuti Saluran WhatsApp',
+                'task_roblox': 'Follow Akun Roblox',
+                'task_yt': 'Subscribe Saluran YouTube',
+                'progress_initial': 'Selesaikan minimal 2 tugas untuk membuka tautan eksklusif',
+                'progress_complete': 'Semua tugas selesai!',
+                'main_button_disabled': 'Selesaikan tugas untuk membuka tautan',
+                'main_button_enabled_prefix': 'Buka',
+                'main_button_enabled_suffix': ' Sekarang!',
+                'donate_title': 'Dukung Saya: Donate Robux!',
+                'contact_title': 'Hubungi Saya',
+                'form_name_label': 'Nama Kamu:',
+                'form_name_placeholder_attr': 'Masukkan nama kamu',
+                'form_email_label': 'Email Kamu:',
+                'form_email_placeholder_attr': 'Masukkan email kamu',
+                'form_message_label': 'Pesan Kamu:',
+                'form_message_placeholder_attr': 'Tulis pesan kamu di sini...',
+                'form_submit': 'Kirim Pesan',
+                'footer_text': 'Dibuat dengan Suka Suka 😋<br>Terima kasih <span style="font-family: \'Segoe UI Emoji\', \'Apple Color Emoji\', \'Segoe UI Symbol\';">G</span>🐱',
+                'verifying_message': 'Memverifikasi...',
+                'task_completed_message': 'Tugas Selesai',
+                'language_toggle_text': 'EN'
+            },
+            'en': {
+                'title': 'Complete Tasks to Unlock Link!',
+                'description': 'Complete a minimum of **2** tasks below to get access to your exclusive link.',
+                'task_wa': 'Follow WhatsApp Channel',
+                'task_roblox': 'Follow Roblox Account',
+                'task_yt': 'Subscribe YouTube Channel',
+                'progress_initial': 'Complete at least 2 tasks to unlock the exclusive link',
+                'progress_complete': 'All tasks completed!',
+                'main_button_disabled': 'Complete tasks to unlock link',
+                'main_button_enabled_prefix': 'Open',
+                'main_button_enabled_suffix': ' Now!',
+                'donate_title': 'Support Me: Donate Robux!',
+                'contact_title': 'Contact Me',
+                'form_name_label': 'Your Name:',
+                'form_name_placeholder_attr': 'Enter your name',
+                'form_email_label': 'Your Email:',
+                'form_email_placeholder_attr': 'Enter your email',
+                'form_message_label': 'Your Message:',
+                'form_message_placeholder_attr': 'Write your message here...',
+                'form_submit': 'Send Message',
+                'footer_text': 'Made with Love 😋<br>Thank you <span style="font-family: \'Segoe UI Emoji\', \'Apple Color Emoji\', \'Segoe UI Symbol\';">G</span>🐱',
+                'verifying_message': 'Verifying...',
+                'task_completed_message': 'Task Completed',
+                'language_toggle_text': 'ID'
+            }
+        };
+
+        function updateLanguageUI() {
+            const elements = document.querySelectorAll('[data-lang-key]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                    // Special handling for placeholder attributes
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        if (key.endsWith('_placeholder_attr')) {
+                            element.setAttribute('placeholder', translations[currentLanguage][key]);
+                        } else {
+                            element.textContent = translations[currentLanguage][key];
+                        }
+                    } else if (key === 'description' || key === 'footer_text') {
+                        element.innerHTML = translations[currentLanguage][key]; // Use innerHTML for bold/emoji
+                    }
+                    else {
+                        element.textContent = translations[currentLanguage][key];
+                    }
+                }
+            });
+
+            // Update specific dynamic texts that are not directly data-lang-key
+            updateUI(); // This will re-evaluate progress and main button text based on currentLanguage
+        }
+
+        languageToggle.addEventListener('click', () => {
+            currentLanguage = (currentLanguage === 'id') ? 'en' : 'id';
+            localStorage.setItem(langKey, currentLanguage);
+            updateLanguageUI();
+        });
+        // --- End Language Translation Logic ---
+
+
         // Function to update a single task button's UI
-        function updateTaskButtonUI(taskElement, isCompleted, defaultText) {
+        function updateTaskButtonUI(taskElement, isCompleted, defaultTextKey) {
             const buttonTextSpan = taskElement.querySelector('.button-text');
             const checkmarkSpan = taskElement.querySelector('.checkmark');
             const spinnerIcon = taskElement.querySelector('.spinner');
@@ -712,7 +869,7 @@
                 taskElement.classList.add('completed');
                 taskElement.removeAttribute('href');
                 taskElement.style.cursor = 'default';
-                buttonTextSpan.textContent = "Tugas Selesai"; // Changed to "Tugas Selesai"
+                buttonTextSpan.textContent = translations[currentLanguage]['task_completed_message']; // Changed to "Tugas Selesai" / "Task Completed"
                 checkmarkSpan.style.display = 'inline-block'; // Show checkmark
                 spinnerIcon.style.display = 'none'; // Hide spinner
                 taskElement.classList.remove('loading'); // Remove loading class
@@ -724,7 +881,7 @@
                 if (taskElement.id === 'youtubeTask') taskElement.setAttribute('href', "https://www.youtube.com/@Hanzerotes");
 
                 taskElement.style.cursor = 'pointer';
-                buttonTextSpan.textContent = defaultText; // Set text to original default
+                buttonTextSpan.textContent = translations[currentLanguage][defaultTextKey]; // Set text to original default based on language
                 checkmarkSpan.style.display = 'none'; // Hide checkmark
                 spinnerIcon.style.display = 'none'; // Hide spinner
                 taskElement.classList.remove('loading'); // Remove loading class
@@ -735,21 +892,21 @@
         function updateUI() {
             let completedTasks = 0;
 
-            updateTaskButtonUI(whatsappTask, isWhatsappCompleted, WA_BUTTON_TEXT);
+            updateTaskButtonUI(whatsappTask, isWhatsappCompleted, 'task_wa');
             if (isWhatsappCompleted) completedTasks++;
 
-            updateTaskButtonUI(robloxTask, isRobloxCompleted, ROBLOX_BUTTON_TEXT);
+            updateTaskButtonUI(robloxTask, isRobloxCompleted, 'task_roblox');
             if (isRobloxCompleted) completedTasks++;
 
-            updateTaskButtonUI(youtubeTask, isYoutubeCompleted, YOUTUBE_BUTTON_TEXT);
+            updateTaskButtonUI(youtubeTask, isYoutubeCompleted, 'task_yt');
             if (isYoutubeCompleted) completedTasks++;
 
             // Update progress bar and text
             const totalTasksNeeded = 2; // Define how many tasks are needed
             if (completedTasks >= totalTasksNeeded) {
-                progressText.textContent = `Semua tugas selesai!`; // Message when enough tasks are done
+                progressText.textContent = translations[currentLanguage]['progress_complete']; // Message when enough tasks are done
             } else {
-                progressText.textContent = `Selesaikan minimal ${totalTasksNeeded} tugas untuk membuka tautan eksklusif`; // Updated progress text
+                progressText.textContent = translations[currentLanguage]['progress_initial']; // Updated progress text
             }
             const progressPercentage = (completedTasks / 3) * 100; // Still show progress out of 3
             progressBar.style.width = `${progressPercentage}%`;
@@ -758,25 +915,26 @@
             // Enable/Disable main button
             if (completedTasks >= totalTasksNeeded) {
                 openLinkButton.disabled = false;
-                openLinkButton.textContent = `Buka ${DISPLAY_TEXT} Sekarang!`;
+                // Use translated prefix and suffix for dynamic text
+                openLinkButton.querySelector('span').textContent = `${translations[currentLanguage]['main_button_enabled_prefix']} ${DISPLAY_TEXT}${translations[currentLanguage]['main_button_enabled_suffix']}`;
             } else {
                 openLinkButton.disabled = true;
-                openLinkButton.textContent = `Selesaikan tugas untuk membuka ${DISPLAY_TEXT}`;
+                openLinkButton.querySelector('span').textContent = translations[currentLanguage]['main_button_disabled'];
             }
         }
 
         // Generic function to handle task clicks
-        function handleTaskClick(taskElement, isCompletedVar, setCompletedVar, originalText) {
+        function handleTaskClick(taskElement, isCompletedVar, setCompletedVar) {
             if (isCompletedVar()) {
                 event.preventDefault(); // Prevent default if already completed
             } else {
                 taskElement.classList.add('loading'); // Add loading class
-                taskElement.querySelector('.button-text').textContent = "Memverifikasi..."; // Change text to verifying
+                taskElement.querySelector('.button-text').textContent = translations[currentLanguage]['verifying_message']; // Change text to verifying
                 taskElement.querySelector('.checkmark').style.display = 'none'; // Hide checkmark
                 taskElement.querySelector('.spinner').style.display = 'inline-block'; // Show spinner
 
                 // Temporarily set progress text to "Sedang Verifikasi..."
-                progressText.textContent = "Sedang Verifikasi...";
+                progressText.textContent = translations[currentLanguage]['verifying_message'];
 
                 setTimeout(() => {
                     setCompletedVar(true); // Update completion status
@@ -787,15 +945,15 @@
 
         // Event Listeners for tasks
         whatsappTask.addEventListener('click', (event) => {
-            handleTaskClick(whatsappTask, () => isWhatsappCompleted, (val) => { isWhatsappCompleted = val; }, WA_BUTTON_TEXT);
+            handleTaskClick(whatsappTask, () => isWhatsappCompleted, (val) => { isWhatsappCompleted = val; });
         });
 
         youtubeTask.addEventListener('click', (event) => {
-            handleTaskClick(youtubeTask, () => isYoutubeCompleted, (val) => { isYoutubeCompleted = val; }, YOUTUBE_BUTTON_TEXT);
+            handleTaskClick(youtubeTask, () => isYoutubeCompleted, (val) => { isYoutubeCompleted = val; });
         });
 
         robloxTask.addEventListener('click', (event) => {
-            handleTaskClick(robloxTask, () => isRobloxCompleted, (val) => { isRobloxCompleted = val; }, ROBLOX_BUTTON_TEXT);
+            handleTaskClick(robloxTask, () => isRobloxCompleted, (val) => { isRobloxCompleted = val; });
         });
 
         openLinkButton.addEventListener('click', () => {
@@ -916,9 +1074,10 @@
         // Initial UI update and theme initialization on page load
         document.addEventListener('DOMContentLoaded', () => {
             initializeTheme(); // Initialize theme first
-            updateUI(); // Then update UI
+            updateLanguageUI(); // Update language based on stored preference
         });
     </script>
 </body>
 </html>
+
 
