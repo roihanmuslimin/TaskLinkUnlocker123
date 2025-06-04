@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selesaikan Tugas untuk Membuka Tautan | Akses Eksklusif & Donasi</title>
-    <meta name="description" content="Selesaikan tugas sederhana untuk membuka tautan eksklusif dan dukung saya dengan donasi Robux. Akses konten premium dengan mudah.">
-    <meta name="keywords" content="tugas, tautan, buka link, robux, donasi, gamepass, whatsapp, youtube, akses eksklusif, github pages">
+    <title data-lang-key="meta_title">Selesaikan Tugas untuk Membuka Tautan | Akses Eksklusif & Donasi</title>
+    <meta name="description" data-lang-key="meta_description" content="Selesaikan tugas sederhana untuk membuka tautan eksklusif dan dukung saya dengan donasi Robux. Akses konten premium dengan mudah.">
+    <meta name="keywords" data-lang-key="meta_keywords" content="tugas, tautan, buka link, robux, donasi, gamepass, whatsapp, youtube, akses eksklusif, github pages">
     <meta name="author" content="G">
 
     <!-- Open Graph / Facebook / Twitter Meta Tags for Social Sharing -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://roihanmuslimin.github.io/TaskLinkUnlocker123/"> <!-- Ganti dengan URL GitHub Pages kamu yang sebenarnya -->
-    <meta property="og:title" content="Selesaikan Tugas untuk Membuka Tautan!">
-    <meta property="og:description" content="Akses konten eksklusif dengan menyelesaikan tugas sederhana dan dukung saya dengan donasi Robux.">
+    <meta property="og:title" data-lang-key="og_title" content="Selesaikan Tugas untuk Membuka Tautan!">
+    <meta property="og:description" data-lang-key="og_description" content="Akses konten eksklusif dengan menyelesaikan tugas sederhana dan dukung saya dengan donasi Robux.">
     <meta property="og:image" content="https://placehold.co/1200x630/e0ffe0/36454F?text=Selesaikan+Tugas+Buka+Tautan"> <!-- Ganti dengan URL gambar thumbnail kamu -->
 
     <!-- Google tag (gtag.js) -->
@@ -20,16 +20,12 @@
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
       gtag('config', 'G-S57XREST5X'); // ID Pengukuran GA4 kamu
     </script>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts - Inter for modern look -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Google Fonts - Roboto Mono for Name Input -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome for Dark Mode Toggle Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -158,11 +154,6 @@
             border: 1px solid #cbd5e1; /* Subtle border for completed */
             animation: none; /* Disable all animations when completed */
         }
-        .task-button.completed .checkmark {
-            margin-left: 0.5rem;
-            color: #25d366; /* Green checkmark */
-            font-size: 1.2em;
-        }
         html.dark .task-button.completed {
             background-color: #4a607a;
             color: #bdc3c7;
@@ -282,146 +273,161 @@
         }
 
 
-        /* Donate Robux Section Styling */
-        .donate-section {
-            margin-top: 3rem; /* More space above this section */
-            padding-top: 2rem;
-            border-top: 1px solid #e0e0e0; /* Subtle light gray separator line */
-            transition: border-color 0.5s ease; /* Smooth transition for theme change */
-        }
-        html.dark .donate-section {
-            border-color: #4a607a; /* Darker separator in dark mode */
-        }
-
-        .donate-title {
-            font-size: 1.75rem; /* Slightly smaller than main title */
-            font-weight: 700;
-            color: #36454F; /* Charcoal - soft dark gray */
+        /* Palestine Flag Styling (Updated based on user's code) */
+        .palestine-flag-container {
+            margin-top: 2.5rem;
             margin-bottom: 1.5rem;
-            transition: color 0.5s ease; /* Smooth transition for theme change */
-        }
-        html.dark .donate-title {
-            color: #ecf0f1; /* Light text in dark mode */
-        }
-
-        .donate-buttons-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 columns on small screens */
-            gap: 1rem; /* Space between buttons */
-        }
-        @media (min-width: 640px) { /* md breakpoint for Tailwind */
-            .donate-buttons-grid {
-                grid-template-columns: repeat(4, 1fr); /* 4 columns on larger screens */
-            }
-        }
-        .donate-button {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            padding: 0.8rem 1.2rem; /* Smaller padding than task buttons */
-            border-radius: 0.75rem; /* Rounded corners */
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            color: white;
-            background: linear-gradient(45deg, #f6ad55, #ed8936); /* Orange gradient */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.2s ease;
-        }
-        /* New: Animation for active (pressed) state of donate buttons */
-        .donate-button:active {
-            transform: scale(0.95); /* Shrink slightly when pressed */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Reduce shadow */
-        }
-        .donate-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-            background: linear-gradient(45deg, #ed8936, #dd6b20);
+            align-items: center;
+            perspective: 1500px; /* Memberikan efek 3D untuk animasi kibaran */
         }
 
-        /* Contact Form Section Styling */
-        .contact-section {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e0e0e0; /* Separator line */
+        .palestine-flag {
+            width: 220px;
+            height: 146px; /* Rasio aspek 3:2 */
+            position: relative;
+            transform-style: preserve-3d; /* Memungkinkan transformasi 3D pada elemen anak */
+            transform-origin: 0% 50%; /* Titik asal animasi kibaran (dari kiri) */
+            animation: wave 7s infinite ease-in-out; /* Animasi kibaran */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Bayangan untuk kedalaman */
+            border-radius: 2px; /* Sedikit sudut membulat */
+            overflow: hidden; /* Memastikan isi tidak keluar dari batas bendera */
+        }
+
+        .palestine-flag-stripe {
+            position: absolute;
+            width: 100%;
+            height: 33.33%; /* Tiga garis yang sama besar */
+        }
+
+        .palestine-flag .black { background-color: #000000; top: 0; }
+        .palestine-flag .white { background-color: #FFFFFF; top: 33.33%; }
+        .palestine-flag .green { background-color: #009639; top: 66.66%; }
+
+        .palestine-flag-triangle {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-top: 73px solid transparent;    /* Setengah tinggi bendera */
+            border-bottom: 73px solid transparent; /* Setengah tinggi bendera */
+            border-left: 110px solid #ED2939;      /* Setengah lebar bendera */
+            z-index: 1; /* Memastikan segitiga di atas garis */
+        }
+
+        /* Keyframes untuk animasi kibaran bendera (dari user) */
+        @keyframes wave {
+            0% { transform: rotateY(0deg) rotateX(0deg) translateX(0px) translateY(0px); }
+            12.5% { transform: rotateY(20deg) rotateX(5deg) translateX(10px) translateY(-2px); }
+            25% { transform: rotateY(0deg) rotateX(0deg) translateX(0px) translateY(0px); }
+            37.5% { transform: rotateY(-20deg) rotateX(-5deg) translateX(-10px) translateY(2px); }
+            50% { transform: rotateY(0deg) rotateX(0deg) translateX(0px) translateY(0px); }
+            62.5% { transform: rotateY(15deg) rotateX(3deg) translateX(7px) translateY(-1px); }
+            75% { transform: rotateY(0deg) rotateX(0deg) translateX(0px) translateY(0px); }
+            87.5% { transform: rotateY(-15deg) rotateX(-3deg) translateX(-7px) translateY(1px); }
+            100% { transform: rotateY(0deg) rotateX(0deg) translateX(0px) translateY(0px); }
+        }
+
+        /* Free Palestine text (font changed back to Inter) */
+        .free-palestine-text {
+            font-family: 'Inter', sans-serif; /* Menggunakan font Inter */
+            font-size: 1.85rem; /* Ukuran font yang besar */
+            font-weight: 800; /* Sangat tebal */
+            color: #36454F; /* Warna abu-abu gelap */
+            margin-top: 1rem; /* Jarak dari bendera */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Bayangan teks lembut */
+            transition: color 0.5s ease;
+        }
+        html.dark .free-palestine-text {
+            color: #ecf0f1;
+        }
+
+        /* Donate Palestine Section */
+        .donate-palestine-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
             transition: border-color 0.5s ease;
         }
-        html.dark .contact-section {
-            border-color: #4a607a; /* Darker separator in dark mode */
+        html.dark .donate-palestine-section {
+            border-color: #4a607a;
         }
-        .contact-title {
+
+        .donate-palestine-title {
             font-size: 1.75rem;
             font-weight: 700;
             color: #36454F;
             margin-bottom: 1.5rem;
             transition: color 0.5s ease;
         }
-        html.dark .contact-title {
+        html.dark .donate-palestine-title {
             color: #ecf0f1;
-        }
-        .contact-form label {
-            display: block;
-            text-align: left;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #475569;
-            transition: color 0.5s ease;
-        }
-        html.dark .contact-form label {
-            color: #bdc3c7;
-        }
-        .contact-form input[type="text"],
-        .contact-form input[type="email"],
-        .contact-form textarea {
-            width: 100%;
-            padding: 0.75rem;
-            margin-bottom: 1.25rem;
-            border: 1px solid #cbd5e1;
-            border-radius: 0.5rem;
-            background-color: #f8fafc; /* Light input background */
-            color: #36454F;
-            transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
-        }
-        html.dark .contact-form input[type="text"],
-        html.dark .contact-form input[type="email"],
-        html.dark .contact-form textarea {
-            background-color: #4a607a; /* Dark input background */
-            border-color: #607d9b;
-            color: #ecf0f1;
-        }
-        .contact-form input[type="text"]:focus,
-        .contact-form input[type="email"]:focus,
-        .contact-form textarea:focus {
-            outline: none;
-            border-color: #6366f1; /* Focus border color */
-            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
-        }
-        .contact-form textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-        /* Specific font for the name input */
-        .contact-form input#name {
-            font-family: 'Roboto Mono', monospace; /* Apply Roboto Mono to the name input */
         }
 
-        .contact-form button[type="submit"] {
-            background: linear-gradient(45deg, #4f46e5, #7c3aed);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 0.75rem;
-            font-weight: 700;
-            font-size: 1.125rem;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        .donate-palestine-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
-        .contact-form button[type="submit"]:hover {
-            background: linear-gradient(45deg, #4338ca, #6d28d9);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+
+        .donate-palestine-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 1.5rem;
+            border-radius: 1rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(45deg, #007236, #005628); /* Green gradient */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .donate-palestine-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(45deg, #005628, #003a1b);
+        }
+        .donate-palestine-button:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Quote Card Styling */
+        .quote-card {
+            background-color: #e0f2f7; /* Light blue/cyan background */
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 2.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #b3e5fc; /* Subtle border */
+            transition: background-color 0.5s ease, border-color 0.5s ease;
+            animation: pulse 2s infinite ease-in-out; /* Gentle pulse animation */
+        }
+        html.dark .quote-card {
+            background-color: #2e4a5a; /* Darker blue-gray */
+            border-color: #4a6572;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
+            50% { transform: scale(1.01); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); }
+            100% { transform: scale(1); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
+        }
+
+        .quote-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #01579b; /* Dark blue text */
+            line-height: 1.6;
+            transition: color 0.5s ease;
+        }
+        html.dark .quote-text {
+            color: #a7d9ed; /* Lighter blue text */
         }
 
         /* Footer text styling */
@@ -532,12 +538,31 @@
                 padding: 1rem 1.5rem;
                 font-size: 1.1rem;
             }
-            .donate-title {
+            .donate-palestine-title {
                 font-size: 1.5rem;
             }
-            .donate-button {
+            .donate-palestine-button {
                 padding: 0.7rem 1rem;
                 font-size: 0.9rem;
+            }
+            .free-palestine-text {
+                font-size: 1.5rem;
+            }
+            /* Responsive flag adjustment */
+            .palestine-flag {
+                width: 180px; /* Ukuran bendera lebih kecil di mobile */
+                height: 120px;
+            }
+            .palestine-flag-triangle {
+                border-top: 60px solid transparent;
+                border-bottom: 60px solid transparent;
+                border-left: 90px solid #ED2939;
+            }
+            .quote-card {
+                padding: 1rem;
+            }
+            .quote-text {
+                font-size: 1rem;
             }
             .footer-text {
                 font-size: 0.85rem;
@@ -555,16 +580,6 @@
                 right: 4.5rem; /* Adjust position for mobile */
                 padding: 0.6rem 0.8rem;
                 font-size: 0.9rem;
-            }
-            .contact-title {
-                font-size: 1.5rem;
-            }
-            .contact-form input[type="text"],
-            .contact-form input[type="email"],
-            .contact-form textarea,
-            .contact-form button[type="submit"] {
-                font-size: 1rem;
-                padding: 0.6rem;
             }
         }
     </style>
@@ -615,43 +630,37 @@
             <span data-lang-key="main_button_disabled">Selesaikan tugas untuk membuka tautan</span>
         </button>
 
-        <!-- Donate Robux Section -->
-        <div class="donate-section">
-            <h2 class="donate-title" data-lang-key="donate_title">Dukung Saya: Donate Robux!</h2>
-            <div class="donate-buttons-grid">
-                <a href="https://www.roblox.com/game-pass/952116430/Donate-5-Robux" target="_blank" class="donate-button">
-                    5 Robux
+        <!-- Palestine Flag Section (Updated based on user's code) -->
+        <div class="palestine-flag-container">
+            <div class="palestine-flag">
+                <div class="palestine-flag-stripe black"></div>
+                <div class="palestine-flag-stripe white"></div>
+                <div class="palestine-flag-stripe green"></div>
+                <div class="palestine-flag-triangle"></div>
+            </div>
+            <p class="free-palestine-text" data-lang-key="free_palestine_text">Free Palestine</p>
+        </div>
+        <!-- End Palestine Flag Section -->
+
+        <!-- Donate to Palestine Section -->
+        <div class="donate-palestine-section">
+            <h2 class="donate-palestine-title" data-lang-key="donate_palestine_title">Donasi ke Palestina</h2>
+            <div class="donate-palestine-buttons">
+                <a href="https://donate.unrwa.org/int/en/gaza" target="_blank" class="donate-palestine-button" data-lang-key="donate_unrwa">
+                    Donasi ke UNRWA (Gaza)
                 </a>
-                <a href="https://www.roblox.com/game-pass/890197076/Donate-10-Robux" target="_blank" class="donate-button">
-                    10 Robux
-                </a>
-                <a href="https://www.roblox.com/game-pass/890190002/Donate-50-Robux" target="_blank" class="donate-button">
-                    50 Robux
-                </a>
-                <a href="https://www.roblox.com/game-pass/928308990/Donate-100-Robux" target="_blank" class="donate-button">
-                    100 Robux
+                <a href="https://kitabisa.com/campaign/bisaberkahpalestina?utm_source=ads_google&utm_medium=cpc&utm_campaign=YAYASAN-NONMED_bisaberkahpalestina_SEM-RAFAG+-+HANDOVER_SEM_DZULFIKAR_ASTRID_ILHAM_RUTH_Yayasan+Berkah+Karunia+Tuhan+_480695&gad_source=1&gad_campaignid=22604289062&gbraid=0AAAAAoKPy0i4pGR3EwWLR6Rpvmk-UO-gA&gclid=CjwKCAjw3f_BBhAPEiwAaA3K5EZscybKh4Qyhs4cv-bpc9hQT9k5ckPIwTefJ9vYCXPFrUnMRwlRhoCZFsQAvD_BwE" target="_blank" class="donate-palestine-button" data-lang-key="donate_kitabisa">
+                    Donasi ke Kitabisa (Palestina)
                 </a>
             </div>
         </div>
-        <!-- End Donate Robux Section -->
+        <!-- End Donate to Palestine Section -->
 
-        <!-- Contact Form Section -->
-        <div class="contact-section">
-            <h2 class="contact-title" data-lang-key="contact_title">Hubungi Saya</h2>
-            <form action="https://formspree.io/f/movwqdao" method="POST" class="contact-form">
-                <label for="name" data-lang-key="form_name_label">Nama Kamu:</label>
-                <input type="text" id="name" name="name" required placeholder="Masukkan nama kamu" data-lang-key="form_name_placeholder_attr">
-
-                <label for="email" data-lang-key="form_email_label">Email Kamu:</label>
-                <input type="email" id="email" name="_replyto" required placeholder="Masukkan email kamu" data-lang-key="form_email_placeholder_attr">
-
-                <label for="message" data-lang-key="form_message_label">Pesan Kamu:</label>
-                <textarea id="message" name="message" rows="5" required placeholder="Tulis pesan kamu di sini..." data-lang-key="form_message_placeholder_attr"></textarea>
-
-                <button type="submit" data-lang-key="form_submit">Kirim Pesan</button>
-            </form>
+        <!-- Quote Card -->
+        <div class="quote-card">
+            <p id="quoteText" class="quote-text"></p>
         </div>
-        <!-- End Contact Form Section -->
+        <!-- End Quote Card -->
 
         <!-- Footer Text -->
         <p class="footer-text" data-lang-key="footer_text">
@@ -701,12 +710,6 @@
         // Get dynamic display text for the main button from 'disphanzer' parameter (plain text)
         const DISPLAY_TEXT = getUrlParameter('disphanzer') || 'script'; // Default to 'script' if no 'disphanzer' param
 
-        // Hardcoded text for each task button (removed URL parameter dependency)
-        const WA_BUTTON_TEXT = 'Ikuti Saluran WhatsApp';
-        const ROBLOX_BUTTON_TEXT = 'Follow Akun Roblox';
-        const YOUTUBE_BUTTON_TEXT = 'Subscribe Saluran YouTube';
-
-
         // Get elements
         const htmlElement = document.documentElement;
         const darkModeToggle = document.getElementById('darkModeToggle');
@@ -717,9 +720,7 @@
         const progressBar = document.getElementById('progressBar');
         const progressText = document.getElementById('progressText');
         const openLinkButton = document.getElementById('openLinkButton');
-        const formNameInput = document.getElementById('name');
-        const formEmailInput = document.getElementById('email');
-        const formMessageTextarea = document.getElementById('message');
+        const quoteTextElement = document.getElementById('quoteText'); // Element for the dynamic quote
 
 
         // Task completion status (ALWAYS reset on page load)
@@ -773,8 +774,16 @@
         const langKey = 'language';
         let currentLanguage = localStorage.getItem(langKey) || 'id'; // Default to Indonesian
 
+        // Store the initially selected quote index to keep it static across language changes
+        let initialQuoteIndex = -1;
+
         const translations = {
             'id': {
+                'meta_title': 'Selesaikan Tugas untuk Membuka Tautan | Akses Eksklusif & Donasi',
+                'meta_description': 'Selesaikan tugas sederhana untuk membuka tautan eksklusif dan dukung perjuangan Palestina. Akses konten premium dengan mudah.',
+                'meta_keywords': 'tugas, tautan, buka link, donasi, palestina, gaza, akses eksklusif, github pages, unrwa, kitabisa, free palestine',
+                'og_title': 'Selesaikan Tugas untuk Membuka Tautan!',
+                'og_description': 'Akses konten eksklusif dengan menyelesaikan tugas sederhana dan dukung perjuangan Palestina.',
                 'title': 'Selesaikan Tugas untuk Membuka Tautan!',
                 'description': 'Selesaikan minimal **2** tugas di bawah ini untuk mendapatkan akses ke tautan eksklusif kamu.',
                 'task_wa': 'Ikuti Saluran WhatsApp',
@@ -785,21 +794,28 @@
                 'main_button_disabled': 'Selesaikan tugas untuk membuka tautan',
                 'main_button_enabled_prefix': 'Buka',
                 'main_button_enabled_suffix': ' Sekarang!',
-                'donate_title': 'Dukung Saya: Donate Robux!',
-                'contact_title': 'Hubungi Saya',
-                'form_name_label': 'Nama Kamu:',
-                'form_name_placeholder_attr': 'Masukkan nama kamu',
-                'form_email_label': 'Email Kamu:',
-                'form_email_placeholder_attr': 'Masukkan email kamu',
-                'form_message_label': 'Pesan Kamu:',
-                'form_message_placeholder_attr': 'Tulis pesan kamu di sini...',
-                'form_submit': 'Kirim Pesan',
+                'free_palestine_text': 'Free Palestine',
+                'donate_palestine_title': 'Donasi ke Palestina',
+                'donate_unrwa': 'Donasi ke UNRWA (Gaza)',
+                'donate_kitabisa': 'Donasi ke Kitabisa (Palestina)',
                 'footer_text': 'Dibuat dengan Suka Suka 😋<br>Terima kasih <span style="font-family: \'Segoe UI Emoji\', \'Apple Color Emoji\', \'Segoe UI Symbol\';">G</span>🐱',
                 'verifying_message': 'Memverifikasi...',
                 'task_completed_message': 'Tugas Selesai',
-                'language_toggle_text': 'EN'
+                'language_toggle_text': 'EN',
+                'quotes': [
+                    'Selamatkan Palestina, selamatkan kemanusiaan.',
+                    'Palestina layak mendapatkan kedamaian dan kebebasan.',
+                    'Anak-anak Palestina berhak mendapatkan Masa depan!',
+                    'Bebaskan Yerusalem: Ibu Kota Palestina!',
+                    'Bersatu untuk Palestina yang merdeka!'
+                ]
             },
             'en': {
+                'meta_title': 'Complete Tasks to Unlock Link | Exclusive Access & Donation',
+                'meta_description': 'Complete simple tasks to unlock exclusive links and support the Palestinian cause. Easily access premium content.',
+                'meta_keywords': 'tasks, unlock link, donation, palestine, gaza, exclusive access, github pages, unrwa, kitabisa, free palestine',
+                'og_title': 'Complete Tasks to Unlock Link!',
+                'og_description': 'Access exclusive content by completing simple tasks and support the Palestinian cause.',
                 'title': 'Complete Tasks to Unlock Link!',
                 'description': 'Complete a minimum of **2** tasks below to get access to your exclusive link.',
                 'task_wa': 'Follow WhatsApp Channel',
@@ -810,19 +826,21 @@
                 'main_button_disabled': 'Complete tasks to unlock link',
                 'main_button_enabled_prefix': 'Open',
                 'main_button_enabled_suffix': ' Now!',
-                'donate_title': 'Support Me: Donate Robux!',
-                'contact_title': 'Contact Me',
-                'form_name_label': 'Your Name:',
-                'form_name_placeholder_attr': 'Enter your name',
-                'form_email_label': 'Your Email:',
-                'form_email_placeholder_attr': 'Enter your email',
-                'form_message_label': 'Your Message:',
-                'form_message_placeholder_attr': 'Write your message here...',
-                'form_submit': 'Send Message',
+                'free_palestine_text': 'Free Palestine', /* Keeping it consistent as per user's request for this specific text */
+                'donate_palestine_title': 'Donate to Palestine',
+                'donate_unrwa': 'Donate to UNRWA (Gaza)',
+                'donate_kitabisa': 'Donate to Kitabisa (Palestine)',
                 'footer_text': 'Made with Love 😋<br>Thank you <span style="font-family: \'Segoe UI Emoji\', \'Apple Color Emoji\', \'Segoe UI Symbol\';">G</span>🐱',
                 'verifying_message': 'Verifying...',
                 'task_completed_message': 'Task Completed',
-                'language_toggle_text': 'ID'
+                'language_toggle_text': 'ID',
+                'quotes': [
+                    'Save Palestine, save humanity.',
+                    'Palestine deserves peace and freedom.',
+                    'Palestinian children deserve a future!',
+                    'Free Jerusalem: Capital of Palestine!',
+                    'United for a free Palestine!'
+                ]
             }
         };
 
@@ -831,8 +849,20 @@
             elements.forEach(element => {
                 const key = element.getAttribute('data-lang-key');
                 if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                    // Handle meta tags separately
+                    if (element.tagName === 'META') {
+                        if (element.getAttribute('name') === 'description') {
+                            element.setAttribute('content', translations[currentLanguage]['meta_description']);
+                        } else if (element.getAttribute('name') === 'keywords') {
+                            element.setAttribute('content', translations[currentLanguage]['meta_keywords']);
+                        } else if (element.getAttribute('property') === 'og:title') {
+                            element.setAttribute('content', translations[currentLanguage]['og_title']);
+                        } else if (element.getAttribute('property') === 'og:description') {
+                            element.setAttribute('content', translations[currentLanguage]['og_description']);
+                        }
+                    }
                     // Special handling for placeholder attributes
-                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                    else if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                         if (key.endsWith('_placeholder_attr')) {
                             element.setAttribute('placeholder', translations[currentLanguage][key]);
                         } else {
@@ -841,14 +871,21 @@
                     } else if (key === 'description' || key === 'footer_text') {
                         element.innerHTML = translations[currentLanguage][key]; // Use innerHTML for bold/emoji
                     }
-                    else {
+                    else if (key !== 'quotes') { // Exclude 'quotes' as it's handled separately
                         element.textContent = translations[currentLanguage][key];
                     }
                 }
             });
 
+            // Update title tag
+            document.querySelector('title').textContent = translations[currentLanguage]['meta_title'];
+
             // Update specific dynamic texts that are not directly data-lang-key
             updateUI(); // This will re-evaluate progress and main button text based on currentLanguage
+            // Update the quote based on the current language, using the initially selected index
+            if (initialQuoteIndex !== -1) { // Only update if an initial quote has been selected
+                quoteTextElement.textContent = translations[currentLanguage]['quotes'][initialQuoteIndex];
+            }
         }
 
         languageToggle.addEventListener('click', () => {
@@ -962,6 +999,18 @@
             }
         });
 
+        // --- Dynamic Quote Logic (Now translates with language, but random on refresh) ---
+        function displayRandomQuote() {
+            // Only select a random index once on initial load
+            if (initialQuoteIndex === -1) {
+                initialQuoteIndex = Math.floor(Math.random() * translations[currentLanguage]['quotes'].length);
+            }
+            // Display the quote based on the current language and the selected index
+            quoteTextElement.textContent = translations[currentLanguage]['quotes'][initialQuoteIndex];
+        }
+        // --- End Dynamic Quote Logic ---
+
+
         // --- Particles.js Initialization ---
         particlesJS('particles-js', {
             "particles": {
@@ -1074,10 +1123,10 @@
         // Initial UI update and theme initialization on page load
         document.addEventListener('DOMContentLoaded', () => {
             initializeTheme(); // Initialize theme first
-            updateLanguageUI(); // Update language based on stored preference
+            displayRandomQuote(); // Select a random quote on initial load
+            updateLanguageUI(); // Update language based on stored preference, which will now also update the quote
         });
     </script>
 </body>
 </html>
-
 
