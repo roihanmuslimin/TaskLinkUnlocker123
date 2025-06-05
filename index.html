@@ -92,12 +92,12 @@
 
         .description {
             font-size: 1.125rem; /* Larger description text */
-            color: #5A626F; /* Muted dark gray */
+            color: #4B5563; /* Adjusted: Darker muted gray for better contrast in light mode */
             margin-bottom: 2rem;
             transition: color 0.5s ease; /* Smooth transition for theme change */
         }
         html.dark .description {
-            color: #bdc3c7; /* Lighter text in dark mode */
+            color: #d0dce3; /* Adjusted: Slightly brighter text in dark mode for better contrast */
         }
 
         .task-button {
@@ -147,7 +147,7 @@
         /* Completed button state */
         .task-button.completed {
             background-color: #e2e8f0; /* Lighter gray for completed */
-            color: #94a3b8; /* Softer gray text */
+            color: #718096; /* Adjusted: Darker gray for better contrast */
             cursor: not-allowed;
             box-shadow: none;
             transform: none;
@@ -156,7 +156,7 @@
         }
         html.dark .task-button.completed {
             background-color: #4a607a;
-            color: #bdc3c7;
+            color: #d0dce3; /* Adjusted: Slightly brighter text */
             border-color: #607d9b;
         }
         html.dark .task-button.completed .checkmark {
@@ -219,13 +219,13 @@
         }
         .progress-text {
             font-size: 0.95rem; /* Slightly smaller text */
-            color: #5A626F; /* Muted dark gray */
+            color: #4B5563; /* Adjusted: Darker muted gray for better contrast in light mode */
             margin-top: 0.75rem;
             font-weight: 500;
             transition: color 0.5s ease; /* Smooth transition for theme change */
         }
         html.dark .progress-text {
-            color: #bdc3c7; /* Lighter text in dark mode */
+            color: #d0dce3; /* Adjusted: Slightly brighter text in dark mode */
         }
 
         /* Main action button */
@@ -282,6 +282,13 @@
             justify-content: center;
             align-items: center;
             perspective: 1500px; /* Memberikan efek 3D untuk animasi kibaran */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; /* Added transition for hover effect */
+            cursor: pointer; /* Indicate it's interactive */
+        }
+
+        .palestine-flag-container:hover {
+            transform: translateY(-8px) scale(1.03); /* Lift and slightly enlarge on hover */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25); /* More pronounced shadow on hover */
         }
 
         .palestine-flag {
@@ -434,13 +441,13 @@
         .footer-text {
             margin-top: 2.5rem; /* Space above footer text */
             font-size: 0.9rem;
-            color: #5A626F; /* Muted dark gray */
+            color: #4B5563; /* Adjusted: Darker muted gray for better contrast in light mode */
             font-weight: 500;
             padding-bottom: 1rem; /* Added padding-bottom for the text itself */
             transition: color 0.5s ease; /* Smooth transition for theme change */
         }
         html.dark .footer-text {
-            color: #bdc3c7; /* Lighter text in dark mode */
+            color: #d0dce3; /* Adjusted: Slightly brighter text in dark mode */
         }
         .footer-text span {
             font-weight: 700; /* Make "G" bold */
@@ -630,7 +637,7 @@
             <span data-lang-key="main_button_disabled">Selesaikan tugas untuk membuka tautan</span>
         </button>
 
-        <!-- Palestine Flag Section (Updated based on user's code) -->
+        <!-- Palestine Flag Section -->
         <div class="palestine-flag-container">
             <div class="palestine-flag">
                 <div class="palestine-flag-stripe black"></div>
@@ -1003,7 +1010,7 @@
         function displayRandomQuote() {
             // Only select a random index once on initial load
             if (initialQuoteIndex === -1) {
-                initialQuoteIndex = Math.floor(Math.random() * translations[currentLanguage]['quotes'].length);
+                initialQuoteIndex = Math.floor(Math.random() * translations.id.quotes.length); // Use a fixed language (e.g., 'id') to get quotes length
             }
             // Display the quote based on the current language and the selected index
             quoteTextElement.textContent = translations[currentLanguage]['quotes'][initialQuoteIndex];
